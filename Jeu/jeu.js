@@ -8,7 +8,7 @@
 		{
 			console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 
-			if(!dragon.estCharge ){ 
+			if(!dragon.estCharge && !ennemi.estCharge){ 
 
 				dragon.afficher();
 				ennemi.afficher();

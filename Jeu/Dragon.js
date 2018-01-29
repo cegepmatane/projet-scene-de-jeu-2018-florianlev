@@ -9,6 +9,9 @@ function Dragon(dessin){
 		imageDragon.src = "0.png";
 
 		imageDragon.onload = noterFinChargement;
+
+		dessin.x = 100;
+		dessin.y = 100;
 	}
 
 	function noterFinChargement()
@@ -22,9 +25,29 @@ function Dragon(dessin){
 		
 	}
 
-	this.avancer = function(){
+	this.deplacerDroite = function(){
+
+		dessin.x += 5;
 
 	}
+
+	this.deplacerGauche = function(){
+
+		dessin.x -= 5;
+		
+	}
+
+	this.deplacerHaut = function(){
+
+		dessin.y -= 5;
+		
+	}
+
+	this.deplacerBas = function(){
+		
+		dessin.y = +5;
+	}
+
 
 	this.attraperBalle = function(){
 		
