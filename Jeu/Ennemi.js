@@ -3,6 +3,7 @@ function Ennemi(dessin){
 	var ennemi = this;
 
 	var imageDragon = new Image();
+	
 	this.estCharge = false;
 
 	function initialiser(){
