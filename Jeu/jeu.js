@@ -32,27 +32,26 @@
 	
 	function gererTouche(evenement)
 	{
-            //alert("touche" + evenement.keyCode);
-            //alert(bonhomme.dessin.x);    
+
         switch(evenement.keyCode)
         {
            	case TOUCHE_GAUCHE:
-                //alert("TOUCHE_GAUCHE");
+                createjs.Ticker.on("tick", dragon.deplacerGauche);
      
-                dragon.deplacerGauche();
+                //dragon.deplacerGauche();
                 break;
             case TOUCHE_DROITE:
                 //alert("TOUCHE_DROITE");
-  
-                dragon.deplacerDroite();
+  				createjs.Ticker.on("tick", dragon.deplacerDroite);
+                //dragon.deplacerDroite();
                 break;
             case TOUCHE_HAUT:
-
-                dragon.deplacerHaut();
+            	createjs.Ticker.on("tick", dragon.deplacerHaut);
+                //dragon.deplacerHaut();
                 break;
             case TOUCHE_BAS:
-     
-                dragon.deplacerBas();
+     			createjs.Ticker.on("tick", dragon.deplacerBas);
+                //dragon.deplacerBas();
                 break;
         }
                 scene.update();

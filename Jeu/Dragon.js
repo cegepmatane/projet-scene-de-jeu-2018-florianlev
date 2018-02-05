@@ -35,7 +35,7 @@ function Dragon(dessin){
 		
 		createjs.Ticker.addEventListener("tick", rafraichirJeu);
 
-		createjs.Ticker.setFPS(12);
+		createjs.Ticker.setFPS(20);
 		spriteDragon = new createjs.SpriteSheet(
 		{	
 			images:[imageDragon],
@@ -58,44 +58,46 @@ function Dragon(dessin){
 		//createjs.Ticker.on("tick", tick);
 	}
 
-	function tick(event){
+	/*function tick(event){
 		spriteDragon.x = spriteDragon.x + (event.delta) / 1000*100;
 		spriteDragon.x = 0;
-	}
+	}*/
 
-	this.deplacerDroite = function(){
+	this.deplacerDroite = function(event){
 
 		scene.addChild(animDroite);
-		createjs.Ticker.on("tick", tick);
+		//createjs.Ticker.on("tick", tick);
 		//animDroite.play();
-		scene.x += 10;
+		scene.x += 5;
 
-		stage.update(event); 
+		scene.update(event); 
 		
 
 	}
 
-	this.deplacerGauche = function(){
+	this.deplacerGauche = function(event){
 
 		scene.addChild(animGauche);
 		//animGauche.play();
-		scene.x -= 15;
+		scene.x -= 5;
+		scene.update(event); 
 	}
 
-	this.deplacerHaut = function(){
+	this.deplacerHaut = function(event){
 
 		
 		scene.addChild(animHaut);
 		//animHaut.play();
 		scene.y -= 5;
-		
+		scene.update(event); 
 	}
 
-	this.deplacerBas = function(){
+	this.deplacerBas = function(event){
 
 		scene.addChild(animBas);
 		//animBas.play();
 		scene.y += 5;
+		scene.update(event); 
 	}
 
 
