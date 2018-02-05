@@ -11,16 +11,13 @@
 	var TOUCHE_HAUT = 38;
 	var TOUCHE_BAS = 40;
 
-	var deplacementX = 0;
-	var deplacementY = 0;
-
 	intervale = setInterval(
 
 		function()
 		{
 			console.log("Jeu->personnage.estCharge " + dragon.estCharge);
-
-			if(!dragon.estCharge ){
+			//console.log("lla");
+			if(!dragon.estCharge){
 
 				
 				dragon.afficher();
