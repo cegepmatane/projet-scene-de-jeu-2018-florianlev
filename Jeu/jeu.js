@@ -16,6 +16,7 @@
 		dessin = document.getElementById("dessin");
 		scene = new createjs.Stage(dessin);
 		dragon = new Dragon(scene);
+		balle = new Balle(scene);
 
 		intervale = setInterval(
 
