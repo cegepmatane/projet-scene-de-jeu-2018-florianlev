@@ -1,62 +1,101 @@
 (function(){
 	//var dessin = document.getElementById("dessin").getContext("2d");
-	var dessin = document.getElementById("dessin");
-	var scene = new createjs.Stage(dessin);
+	var dessin ;
+	var scene ;
 
-	var dragon = new Dragon(dessin);
-	var ennemi = new Ennemi(dessin);
+	var dragon;
+	//var ennemi = new Ennemi(dessin);
 
 	var TOUCHE_GAUCHE = 37; 
 	var TOUCHE_DROITE = 39;
 	var TOUCHE_HAUT = 38;
 	var TOUCHE_BAS = 40;
+	var NOMBRE_DE_PAS = 300;
 
-	intervale = setInterval(
+	function initialiser(){
+		dessin = document.getElementById("dessin");
+		scene = new createjs.Stage(dessin);
+		dragon = new Dragon(scene);
 
-		function()
-		{
-			console.log("Jeu->personnage.estCharge " + dragon.estCharge);
+		intervale = setInterval(
+
+			function()
+			{
+				console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 			//console.log("lla");
-			if(!dragon.estCharge){
-
+			if(dragon.estCharge){
+				clearInterval(intervale);
+				//alert("toto");
 				
 				dragon.afficher();
 				//ennemi.afficher();
 
-				clearInterval(intervale);
-
+		        document.onkeydown = gererToucheEnfoncee;
+		        document.onkeyup = gererToucheLevee;
+				createjs.Ticker.framerate = 60;
+				createjs.Ticker.addEventListener("tick", rafraichir);
 			}
 
 		}, 1);
+	}
 
-	
-	function gererTouche(evenement)
+
+	function rafraichir(evenement){
+		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
+		dragon.appliquerVitesse(vitesseParSeconde);
+		scene.update(evenement);
+
+	}
+
+	function gererToucheEnfoncee(evenement)
 	{
 
-        switch(evenement.keyCode)
-        {
-           	case TOUCHE_GAUCHE:
-                createjs.Ticker.on("tick", dragon.deplacerGauche);
-     
+		switch(evenement.keyCode)
+		{
+			case TOUCHE_GAUCHE:
+				dragon.deplacerVersLaGauche();
+
                 //dragon.deplacerGauche();
                 break;
             case TOUCHE_DROITE:
                 //alert("TOUCHE_DROITE");
-  				createjs.Ticker.on("tick", dragon.deplacerDroite);
+               	dragon.deplacerVersLaDroite();
                 //dragon.deplacerDroite();
                 break;
             case TOUCHE_HAUT:
-            	createjs.Ticker.on("tick", dragon.deplacerHaut);
+                dragon.deplacerVersLeHaut();
                 //dragon.deplacerHaut();
                 break;
             case TOUCHE_BAS:
-     			createjs.Ticker.on("tick", dragon.deplacerBas);
+                dragon.deplacerVersLeBas();
                 //dragon.deplacerBas();
                 break;
         }
-                scene.update();
+
     }
 
-    this.document.onkeydown = gererTouche;
+        function gererToucheLevee(evenement){
+
+        	switch(evenement.keyCode){
+        		case TOUCHE_GAUCHE:
+        		dragon.maintenirPosition();
+        		break;
+
+        		case TOUCHE_DROITE:
+        		dragon.maintenirPosition();
+        		break;
+
+        		case TOUCHE_HAUT:
+        		dragon.maintenirPosition();
+        		break;
+
+        		case TOUCHE_BAS:
+        		dragon.maintenirPosition();
+        		break;
+        	}
+        }
+
+        initialiser();
+
 
 })();
