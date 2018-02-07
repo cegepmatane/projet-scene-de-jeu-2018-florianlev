@@ -2,8 +2,11 @@
 	//var dessin = document.getElementById("dessin").getContext("2d");
 	var dessin ;
 	var scene ;
+	var contexte;
 
 	var dragon;
+
+	
 	//var ennemi = new Ennemi(dessin);
 
 	var TOUCHE_GAUCHE = 37; 
@@ -11,12 +14,19 @@
 	var TOUCHE_HAUT = 38;
 	var TOUCHE_BAS = 40;
 	var NOMBRE_DE_PAS = 300;
+	//balle = new Balle(scene);
+	
 
 	function initialiser(){
 		dessin = document.getElementById("dessin");
+		contexte = dessin.getContext("2d");
+		
 		scene = new createjs.Stage(dessin);
 		dragon = new Dragon(scene);
-		balle = new Balle(scene);
+		balle = new Balle(contexte, dessin);
+
+
+
 
 		intervale = setInterval(
 
@@ -24,20 +34,22 @@
 			{
 				console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 			//console.log("lla");
-			if(dragon.estCharge){
+			if(dragon.estCharge ){
 				clearInterval(intervale);
-				//alert("toto");
-				
+
 				dragon.afficher();
-				//ennemi.afficher();
+
 
 		        document.onkeydown = gererToucheEnfoncee;
 		        document.onkeyup = gererToucheLevee;
-				createjs.Ticker.framerate = 60;
+				createjs.Ticker.framerate = 90;
 				createjs.Ticker.addEventListener("tick", rafraichir);
 			}
 
+
 		}, 1);
+
+		intervaleDessinerBalle = setInterval(balle.dessiner,10);
 	}
 
 
