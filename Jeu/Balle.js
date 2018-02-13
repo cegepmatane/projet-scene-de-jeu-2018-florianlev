@@ -15,12 +15,17 @@ function Balle(contexte, dessin){
 	{
 		contexte.beginPath();
 		contexte.arc(x, y, r, 0, Math.PI*2, true);
-		contexte.closePath();
+		contexte.closePath();	
 		contexte.fill();
 
 	}
 
-	
+	/* function rect(x,y,w,h) {
+		contexte.beginPath();
+		contexte.rect(x,y,w,h);
+		contexte.closePath();
+		contexte.fill();
+	} */
 
 	function clear() {
  		contexte.clearRect(0, 0, dessin.width, dessin.height);
@@ -32,7 +37,7 @@ function Balle(contexte, dessin){
 	{
 
 		cercle(x,y, 10);
-		 if (x + dx > dessin.width || x + dx < 0) // Dépassement à droite ou à gauche
+		if (x + dx > dessin.width || x + dx < 0) // Dépassement à droite ou à gauche
 		 	dx = -dx;
   		if (y + dy > dessin.height|| y + dy < 0) // Dépassement en bas ou en haut
   			dy = -dy;

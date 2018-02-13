@@ -1,32 +1,31 @@
-function Dragon(scene){
+function Dragon(scene) {
 
 	var dragon = this;
 
-	var imageDragon ;
+	var imageDragon;
 	this.estCharge = false;
 	var bmpAnim;
 	var spriteDragon;
 
 	var animHaut;
-	var	animDroite;
-	var	animGauche;
-	var	animBas;
+	var animDroite;
+	var animGauche;
+	var animBas;
 
-	var positionCourante = {x:0, y:0};
+	var positionCourante = { x: 0, y: 0 };
 
 	var etatCourant;
 	var Etat = {
-		enDirectionDroite : "EN DIRECTION DROITE",
-		enDirectionGauche : "EN DIRECTION GAUCHE",
-		enDirectionHaut : "EN DIRECTION HAUT",
-		enDirectionBas : "EN DIRECTION BAS",
-		enSurplace : "EN SURPLACE",
+		enDirectionDroite: "EN DIRECTION DROITE",
+		enDirectionGauche: "EN DIRECTION GAUCHE",
+		enDirectionHaut: "EN DIRECTION HAUT",
+		enDirectionBas: "EN DIRECTION BAS",
+		enSurplace: "EN SURPLACE",
 	}
 	//player = animationDeplacement(10,10)
-	
 
-	function initialiser()
-	{
+
+	function initialiser() {
 
 		imageDragon = new Image();
 		imageDragon.src = "dragons.png";
@@ -38,182 +37,193 @@ function Dragon(scene){
 
 	}
 
-	function terminerChargement()
-	{
-		
+	function terminerChargement() {
+
 
 		spriteDragon = new createjs.SpriteSheet(
-		{	
-			images:[imageDragon],
-			frames:{"regX" : 0, "height" : 128, "count": 64, "regY": 0, "width": 128},
-			framerate: 13, 
-			animations:
 			{
-				marcheBas:[0,3, "marcheBas"],
-				marcheGauche:[4,7, "marcheGauche"],
-				marcheDroite:[8,11, "marcheDroite"],
-				marcheHaut:[12,15, "marcheHaut"]
-			}
+				images: [imageDragon],
+				frames: { "regX": 0, "height": 128, "count": 64, "regY": 0, "width": 128 },
+				framerate: 13,
+				animations:
+					{
+						marcheBas: [0, 3, "marcheBas"],
+						marcheGauche: [4, 7, "marcheGauche"],
+						marcheDroite: [8, 11, "marcheDroite"],
+						marcheHaut: [12, 15, "marcheHaut"]
+					}
 
-		});
-		
+			});
+
 		animHaut = new createjs.Sprite(spriteDragon, "marcheHaut");
 		animDroite = new createjs.Sprite(spriteDragon, "marcheDroite");
 		animGauche = new createjs.Sprite(spriteDragon, "marcheGauche");
 		animBas = new createjs.Sprite(spriteDragon, "marcheBas");
 		dragon.estCharge = true;
 
-		animDroite.x = positionCourante.x ;
-		animDroite.y = positionCourante.y ;
-
-
-
-		etatCourant = Etat.enDirectionDroite;
-		
-	}
-
-// fonction IDLE du personnage
-this.afficher = function()
-{
-	scene.addChild(animDroite);
-}
-
-this.appliquerVitesse = function(nombreDePas){
-	if(etatCourant == Etat.enDirectionDroite)
-	{
-		positionCourante.x = animDroite.x;
-		positionCourante.x += nombreDePas;
-		animDroite.x = positionCourante.x; 
-
-	}
-	if(etatCourant == Etat.enDirectionGauche)
-	{
-		positionCourante.x = animGauche.x;
-		positionCourante.x -= nombreDePas;
-		animGauche.x = positionCourante.x; 
-	}
-	if(etatCourant == Etat.enDirectionHaut)
-	{
-		positionCourante.y = animHaut.y;
-		positionCourante.y -= nombreDePas;
-		animHaut.y = positionCourante.y; 
-	}
-	if(etatCourant == Etat.enDirectionBas)
-	{
-		positionCourante.y = animBas.y;
-		positionCourante.y += nombreDePas;
-		animBas.y = positionCourante.y; 
-	}
-	if(etatCourant == Etat.enSurplace )
-	{
-	}
-
-
-
-}
-
-this.maintenirPosition = function()
-{
-	etatCourant = Etat.enSurplace;
-}
-
-this.deplacerVersLaDroite = function()
-{
-	if(etatCourant == Etat.enDirectionDroite)
-	{
-	}
-	else
-	{
-		retirerAncienneSprite();
-		scene.addChild(animDroite);
 		animDroite.x = positionCourante.x;
 		animDroite.y = positionCourante.y;
+
+
+
 		etatCourant = Etat.enDirectionDroite;
 
 	}
 
-}
-
-this.deplacerVersLaGauche = function()
-{
-	if(etatCourant == Etat.enDirectionGauche)
-	{
-	}
-	else
-	{
-		retirerAncienneSprite();
-		scene.addChild(animGauche);
-		animGauche.x = positionCourante.x;
-		animGauche.y = positionCourante.y;
-		etatCourant = Etat.enDirectionGauche;
-
+	// fonction IDLE du personnage
+	this.afficher = function () {
+		scene.addChild(animDroite);
 	}
 
-}
+	this.appliquerVitesse = function (nombreDePas) {
+		if (etatCourant == Etat.enDirectionDroite) {
+			positionCourante.x = animDroite.x;
+			positionCourante.x += nombreDePas;
+			animDroite.x = positionCourante.x;
 
-this.deplacerVersLeHaut = function()
-{
-	if(etatCourant == Etat.enDirectionHaut)
-	{
-	}
-	else
-	{
-		retirerAncienneSprite();
-		scene.addChild(animHaut);
-		animHaut.x = positionCourante.x;
-		animHaut.y = positionCourante.y;
-		etatCourant = Etat.enDirectionHaut;
+		}
+		if (etatCourant == Etat.enDirectionGauche) {
+			positionCourante.x = animGauche.x;
+			positionCourante.x -= nombreDePas;
+			animGauche.x = positionCourante.x;
+		}
+		if (etatCourant == Etat.enDirectionHaut) {
+			positionCourante.y = animHaut.y;
+			positionCourante.y -= nombreDePas;
+			animHaut.y = positionCourante.y;
+		}
+		if (etatCourant == Etat.enDirectionBas) {
+			positionCourante.y = animBas.y;
+			positionCourante.y += nombreDePas;
+			animBas.y = positionCourante.y;
+		}
+		if (etatCourant == Etat.enSurplace) {
+		}
 
-	}
 
-}
-
-this.deplacerVersLeBas = function()
-{
-	if(etatCourant == Etat.enDirectionBas)
-	{
-	}
-	else
-	{
-		retirerAncienneSprite();
-		scene.addChild(animBas);
-		animBas.x = positionCourante.x;
-		animBas.y = positionCourante.y;
-		etatCourant = Etat.enDirectionBas;
 
 	}
 
-}
+	this.maintenirPosition = function () {
+		etatCourant = Etat.enSurplace;
+	}
+
+	this.deplacerVersLaDroite = function () {
+		if (etatCourant == Etat.enDirectionDroite) {
+		}
+		else {
+			retirerAncienneSprite();
+			scene.addChild(animDroite);
+			animDroite.x = positionCourante.x;
+			animDroite.y = positionCourante.y;
+			etatCourant = Etat.enDirectionDroite;
+
+		}
+
+	}
+
+	this.deplacerVersLaGauche = function () {
+		if (etatCourant == Etat.enDirectionGauche) {
+		}
+		else {
+			retirerAncienneSprite();
+			scene.addChild(animGauche);
+			animGauche.x = positionCourante.x;
+			animGauche.y = positionCourante.y;
+			etatCourant = Etat.enDirectionGauche;
+
+		}
+
+	}
+
+	this.deplacerVersLeHaut = function () {
+		if (etatCourant == Etat.enDirectionHaut) {
+		}
+		else {
+			retirerAncienneSprite();
+			scene.addChild(animHaut);
+			animHaut.x = positionCourante.x;
+			animHaut.y = positionCourante.y;
+			etatCourant = Etat.enDirectionHaut;
+
+		}
+
+	}
+
+	this.deplacerVersLeBas = function () {
+		if (etatCourant == Etat.enDirectionBas) {
+		}
+		else {
+			retirerAncienneSprite();
+			scene.addChild(animBas);
+			animBas.x = positionCourante.x;
+			animBas.y = positionCourante.y;
+			etatCourant = Etat.enDirectionBas;
+
+		}
+
+	}
 
 
 
-function retirerAncienneSprite()
-{
+	function retirerAncienneSprite() {
 
-	switch (etatCourant)
-	{
+		switch (etatCourant) {
 
-		case Etat.enDirectionDroite:
-		scene.removeChild(animDroite);
-		break;
-		case Etat.enDirectionGauche:
-		scene.removeChild(animGauche);
-		break;
-		case Etat.enDirectionHaut:
-		scene.removeChild(animHaut);
-		break;
-		case Etat.enDirectionBas:
-		scene.removeChild(animBas);
-		break;
+			case Etat.enDirectionDroite:
+				scene.removeChild(animDroite);
+				break;
+			case Etat.enDirectionGauche:
+				scene.removeChild(animGauche);
+				break;
+			case Etat.enDirectionHaut:
+				scene.removeChild(animHaut);
+				break;
+			case Etat.enDirectionBas:
+				scene.removeChild(animBas);
+				break;
+
+
+		}
+	}
+
+
+
+	function detecterCollision() {
+
+		if (verifierCadran(animHaut, flocon.forme)) {
+			console.log("coucou");
+			/* if (verifierCadre(animationPapillonVole, flocon.forme)) {
+				flocon.foncer();
+			} */
+		}
+		if (verifierCadran(animDroite, flocon.forme)) {
+			console.log("coucou");
+		}
+
+		if (verifierCadran(animGauche, flocon.forme)) {
+			console.log("coucou");
+		}
+
+		if (verifierCadran(animBas, flocon.forme)) {
+			console.log("coucou");
+		}
+
+
 
 
 	}
-}
+
+	function verifierCadran(animation, forme) {
+		if (Math.abs((animation.x + 88) - forme.x) > seuilCadran) return false;
+		if (Math.abs((animation.y + 88) - forme.y) > seuilCadran) return false;
+		return true;
+	}
 
 
 
-	this.attraperBalle = function(){
-		
+	this.attraperBalle = function () {
+
 	}
 
 	/*function rafraichirJeu(evenement)

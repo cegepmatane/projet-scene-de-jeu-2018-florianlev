@@ -24,8 +24,8 @@
 		scene = new createjs.Stage(dessin);
 		dragon = new Dragon(scene);
 		balle = new Balle(contexte, dessin);
-
-
+		window.addEventListener(window.Evenement.dragonEnCollisionAvecBalle.type, interpreterEvenementsApplicatifs, false);
+		
 
 
 		intervale = setInterval(
@@ -49,15 +49,30 @@
 
 		}, 1);
 
-		intervaleDessinerBalle = setInterval(balle.dessiner,10);
+		intervaleDessinerBalle = setInterval(balle.dessiner,2);
 	}
 
+
+
+	var interpreterEvenementsApplicatifs = function(evenement)
+	{
+		switch(evenement.type)
+		{
+			case window.Evenement.dragonEnCollisionAvecBalle.type:
+				console.log("coucou");
+			break;
+		}
+	}
 
 	function rafraichir(evenement){
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		dragon.appliquerVitesse(vitesseParSeconde);
+		
+		if(dragon.representationRectangle().intersects(balle.representationRectangle()))
+		{
+			window.dispatchEvent(window.Evenement.dragonEnCollisionAvecBalle);
+		}
 		scene.update(evenement);
-
 	}
 
 	function gererToucheEnfoncee(evenement)
@@ -85,7 +100,15 @@
                 break;
         }
 
-    }
+	}
+	
+
+	Jeu.Evenement = 
+	{
+		dragonEnCollisionAvecBalle = document.createEvent('Event'),
+
+
+	}
 
         function gererToucheLevee(evenement){
 
@@ -107,6 +130,8 @@
         		break;
         	}
         }
+
+
 
         initialiser();
 
