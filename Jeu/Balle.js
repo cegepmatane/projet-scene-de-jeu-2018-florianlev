@@ -1,49 +1,42 @@
-function Balle(contexte, dessin){
-
-	var balle = this;
-	this.estCharge = false;
-
-	var x = 150;
-	var y = 150;
-	var dx = 2;
-	var dy = 4;
-
+function Balle(stage,canvas){
+	
+	dessin = new createjs.Shape();
+	dessin.x = 150;
+	dessin.y = 150;
+	this.estCharge = false;	
+	dy = 4;
+	dx = 2;
 	
 
-
-	function cercle(x,y,r)
+	this.dessinerBalle = function()
 	{
-		contexte.beginPath();
-		contexte.arc(x, y, r, 0, Math.PI*2, true);
-		contexte.closePath();	
-		contexte.fill();
+		dessin.graphics.beginFill("#330707");
+		dessin.graphics.drawCircle(0,0,20);
+
+		
+		stage.addChild(dessin);
+
+		//rectangleBalle = this.dessin.setBounds(this.dessin.x, this.dessin.y, this.dessin.dx,this.dessin.dy)
+	}
+
+	this.deplacementBalle = function ()
+	{
+		if (dessin.x + dx > canvas.width || dessin.x + dx < 0) // Dépassement à droite ou à gauche
+			dx =- dx;
+  		if (dessin.y + dy > canvas.height|| dessin.y + dy < 0) // Dépassement en bas ou en haut
+			dy =- dy;
+		
+		dessin.x += dx; // On déplace la balle
+		dessin.y += dy;
+		
+		
 
 	}
 
-	/* function rect(x,y,w,h) {
-		contexte.beginPath();
-		contexte.rect(x,y,w,h);
-		contexte.closePath();
-		contexte.fill();
-	} */
-
-	function clear() {
- 		contexte.clearRect(0, 0, dessin.width, dessin.height);
-	}
-	
-
-	
-	this.dessiner = function()
+	this.rectangleDeBalle = function ()
 	{
-
-		cercle(x,y, 10);
-		if (x + dx > dessin.width || x + dx < 0) // Dépassement à droite ou à gauche
-		 	dx = -dx;
-  		if (y + dy > dessin.height|| y + dy < 0) // Dépassement en bas ou en haut
-  			dy = -dy;
+		return dessin.setBounds(dessin.x,dessin.y);
+	}
 
 
-  		x += dx; // On déplace la balle
-  		y += dy;
-  	}
   }

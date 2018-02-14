@@ -64,9 +64,14 @@ function Dragon(scene) {
 		animDroite.x = positionCourante.x;
 		animDroite.y = positionCourante.y;
 
-
-
 		etatCourant = Etat.enDirectionDroite;
+
+		rectrangleAnimationDragonMarcheBas = animBas.getTransformedBounds();
+		rectrangleAnimationDragonMarcheHaut = animHaut.getTransformedBounds();
+		rectrangleAnimationDragonMarcheGauche = animGauche.getTransformedBounds();
+		rectrangleAnimationDragonMarcheDroite = animDroite.getTransformedBounds();
+
+
 
 	}
 
@@ -186,39 +191,30 @@ function Dragon(scene) {
 
 		}
 	}
+ 
 
-
-
-	function detecterCollision() {
-
-		if (verifierCadran(animHaut, flocon.forme)) {
-			console.log("coucou");
-			/* if (verifierCadre(animationPapillonVole, flocon.forme)) {
-				flocon.foncer();
-			} */
-		}
-		if (verifierCadran(animDroite, flocon.forme)) {
-			console.log("coucou");
-		}
-
-		if (verifierCadran(animGauche, flocon.forme)) {
-			console.log("coucou");
-		}
-
-		if (verifierCadran(animBas, flocon.forme)) {
-			console.log("coucou");
-		}
-
-
-
-
+	this.representationRectangleAnimationBas = function()
+	{
+		return rectrangleAnimationDragonMarcheBas = animBas.getTransformedBounds();
 	}
 
-	function verifierCadran(animation, forme) {
-		if (Math.abs((animation.x + 88) - forme.x) > seuilCadran) return false;
-		if (Math.abs((animation.y + 88) - forme.y) > seuilCadran) return false;
-		return true;
+	this.representationRectangleAnimationHaut = function()
+	{
+		return rectrangleAnimationDragonMarcheHaut = animHaut.getTransformedBounds();
 	}
+
+	this.representationRectangleAnimationGauche = function()
+	{
+		return rectrangleAnimationDragonMarcheGauche = animGauche.getTransformedBounds();
+	}
+
+	this.representationRectangleAnimationDroite = function()
+	{
+		return rectrangleAnimationDragonMarcheDroite = animGauche.getTransformedBounds();
+	} 
+
+
+
 
 
 
