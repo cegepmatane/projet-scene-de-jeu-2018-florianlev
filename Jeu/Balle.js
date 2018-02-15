@@ -3,20 +3,30 @@ function Balle(stage,canvas){
 	dessin = new createjs.Shape();
 	dessin.x = 150;
 	dessin.y = 150;
-	this.estCharge = false;	
+	
 	dy = 4;
 	dx = 2;
+
+	function initialiser()
+	{
+
+		this.estChargee = false;
+		dessinerBalle();
+	}
 	
 
-	this.dessinerBalle = function()
+	function dessinerBalle()
 	{
+		
 		dessin.graphics.beginFill("#330707");
 		dessin.graphics.drawCircle(0,0,20);
+	
+	}
 
-		
+	this.afficher = function()
+	{	
 		stage.addChild(dessin);
-
-		//rectangleBalle = this.dessin.setBounds(this.dessin.x, this.dessin.y, this.dessin.dx,this.dessin.dy)
+		
 	}
 
 	this.deplacementBalle = function ()
@@ -33,10 +43,19 @@ function Balle(stage,canvas){
 
 	}
 
-	this.rectangleDeBalle = function ()
+	
+	this.rectangleBalle = function()
 	{
-		return dessin.setBounds(dessin.x,dessin.y);
+
+		dessin.setBounds(dessin.x,dessin.y,50, 50);
+
+		return dessin.getBounds();
 	}
 
 
+
+
+	initialiser();
+
+	
   }

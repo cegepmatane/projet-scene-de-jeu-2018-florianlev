@@ -10,11 +10,16 @@ function Dragon(scene) {
 	var animHaut;
 	var animDroite;
 	var animGauche;
-	var animBas;
+	var etatActuelX;
+	var etatActuelY;
+	this.animBas;
 
 	var positionCourante = { x: 0, y: 0 };
 
 	var etatCourant;
+
+	// utiliser etats pour collisionement
+
 	var Etat = {
 		enDirectionDroite: "EN DIRECTION DROITE",
 		enDirectionGauche: "EN DIRECTION GAUCHE",
@@ -63,7 +68,6 @@ function Dragon(scene) {
 
 		animDroite.x = positionCourante.x;
 		animDroite.y = positionCourante.y;
-
 		etatCourant = Etat.enDirectionDroite;
 
 		rectrangleAnimationDragonMarcheBas = animBas.getTransformedBounds();
@@ -191,41 +195,33 @@ function Dragon(scene) {
 
 		}
 	}
- 
 
-	this.representationRectangleAnimationBas = function()
-	{
-		return rectrangleAnimationDragonMarcheBas = animBas.getTransformedBounds();
+
+	this.rectangleDuDragon = function () {
+
+		switch (etatCourant) {
+			case Etat.enDirectionDroite:
+				etatActuelX = animDroite.getTransformedBounds();
+				break;
+			case Etat.enDirectionGauche:
+				etatActuelX = animGauche.getTransformedBounds();
+				break;
+			case Etat.enDirectionHaut:
+				etatActuelX = animHaut.getTransformedBounds();
+				break;
+			case Etat.enDirectionBas:
+				etatActuelX = animBas.getTransformedBounds();
+				break;
+		}
+
+		return etatActuelX;
 	}
-
-	this.representationRectangleAnimationHaut = function()
-	{
-		return rectrangleAnimationDragonMarcheHaut = animHaut.getTransformedBounds();
-	}
-
-	this.representationRectangleAnimationGauche = function()
-	{
-		return rectrangleAnimationDragonMarcheGauche = animGauche.getTransformedBounds();
-	}
-
-	this.representationRectangleAnimationDroite = function()
-	{
-		return rectrangleAnimationDragonMarcheDroite = animGauche.getTransformedBounds();
-	} 
-
-
-
-
 
 
 	this.attraperBalle = function () {
 
 	}
 
-	/*function rafraichirJeu(evenement)
-	{
-		scene.update();
-	}*/
 
 	initialiser();
 }
