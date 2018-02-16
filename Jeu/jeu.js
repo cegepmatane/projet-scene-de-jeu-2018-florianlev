@@ -8,15 +8,21 @@
 	var dragon;
 	var balle;
 
-
-
 	var TOUCHE_GAUCHE = 37;
 	var TOUCHE_DROITE = 39;
 	var TOUCHE_HAUT = 38;
 	var TOUCHE_BAS = 40;
 	var TOUCHE_ESPACE = 32;
-	var NOMBRE_DE_PAS = 300;
+	
+	var NOMBRE_DE_PAS = 500	;
 
+	var EtatCouleur = {
+		bleu: "est Bleu",
+		rouge: "est Rouge",
+		orange: "est Orange",
+		jaune: "est Jaune",
+	}
+	
 
 	function initialiser() {
 
@@ -26,7 +32,9 @@
 		scene = new createjs.Stage(dessin);
 		balle = new Balle(scene, dessin);
 
-		dragon = new Dragon(scene);
+		dragon = new Dragon(scene,EtatCouleur.orange);
+		
+
 
 		intervale = setInterval(
 
@@ -43,6 +51,8 @@
 
 					document.onkeydown = gererToucheEnfoncee;
 					document.onkeyup = gererToucheLevee;
+					dessin.addEventListener("mouseup", cliqueLevee, false);
+
 					createjs.Ticker.framerate = 90;
 					createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
 
@@ -51,6 +61,8 @@
 			}, 1);
 
 	}
+
+
 
 
 	function pasEnCollision() {
@@ -101,9 +113,6 @@
 				dragon.deplacerVersLeBas();
 
 				break;
-
-
-
 		}
 	}
 
@@ -132,14 +141,20 @@
 			case TOUCHE_ESPACE:
 
 				if (balle.pasEnCollision) {
-					balle.estAttrapper();
+					balle.attraper(dragon.getCouleur());
 					//console.log("suce ma bite");
 				}
 				break;
-
-
-
 		}
+	}
+
+	function cliqueLevee()
+	{
+		if(balle.pasEnCollision){
+			
+			balle.lancer();
+		}
+		
 	}
 
 	initialiser();

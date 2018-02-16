@@ -1,4 +1,4 @@
-function Dragon(scene) {
+function Dragon(scene, couleur) {
 
 	var dragon = this;
 
@@ -27,6 +27,7 @@ function Dragon(scene) {
 	// utiliser etats pour collisionement
 
 	var Etat = {
+
 		enDirectionDroite: "EN DIRECTION DROITE",
 		enDirectionGauche: "EN DIRECTION GAUCHE",
 		enDirectionHaut: "EN DIRECTION HAUT",
@@ -217,6 +218,12 @@ function Dragon(scene) {
 	this.lancerBalle = function()
 	{
 
+	}
+
+	this.getCouleur = function()
+	{
+		console.log(couleur);
+		return couleur;
 	}
 
 
