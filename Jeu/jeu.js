@@ -9,10 +9,12 @@
 	var balle;
 
 
+
 	var TOUCHE_GAUCHE = 37;
 	var TOUCHE_DROITE = 39;
 	var TOUCHE_HAUT = 38;
 	var TOUCHE_BAS = 40;
+	var TOUCHE_ESPACE = 32;
 	var NOMBRE_DE_PAS = 300;
 
 
@@ -23,14 +25,13 @@
 
 		scene = new createjs.Stage(dessin);
 		balle = new Balle(scene, dessin);
-		balle.estChargee = true;
-		console.log(balle.estChargee);
+
 		dragon = new Dragon(scene);
-		
+
 		intervale = setInterval(
 
 			function () {
-				
+
 				console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 
 				if (dragon.estCharge) {
@@ -44,35 +45,36 @@
 					document.onkeyup = gererToucheLevee;
 					createjs.Ticker.framerate = 90;
 					createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
-					
-			
+
+
 				}
 			}, 1);
 
 	}
 
 
-	function collision()
-	{
+	function pasEnCollision() {
+		rectangleDuDragon = dragon.rectangleDuDragon();
+		rectangleDeBalle = balle.rectangleBalle();
 
-		console.log(dragon.rectangleDuDragon().height);
-		if (dragon.rectangleDuDragon().x >= balle.rectangleBalle().x +  balle.rectangleBalle().width || dragon.rectangleDuDragon().x + dragon.rectangleDuDragon().width <= balle.rectangleBalle().x || dragon.rectangleDuDragon().y >= balle.rectangleBalle().y + balle.rectangleBalle().height || dragon.rectangleDuDragon().y +dragon.rectangleDuDragon().height <= balle.rectangleBalle().y){
-			return console.log("caca");
-		} 
-		
-	
+		if (rectangleDuDragon.x >= rectangleDeBalle.x + rectangleDeBalle.width || rectangleDuDragon.x + rectangleDuDragon.width <= rectangleDeBalle.x || rectangleDuDragon.y >= rectangleDeBalle.y + rectangleDeBalle.height || rectangleDuDragon.y + rectangleDuDragon.height <= rectangleDeBalle.y) {
+			balle.pasEnCollision = false;
+
+		}
+		else {
+			balle.pasEnCollision = true;
+		}
+
 	}
 
-	this.checkIntersection = function (rect1, rect2) {
-		if (rect1.x >= rect2.x + rect2.width || rect1.x + rect1.width <= rect2.x || rect1.y >= rect2.y + rect2.height || rect1.y + rect1.height <= rect2.y) return false;
-		return true;
-	}
 
 	function rafraichirDeplacementHero(evenement) {
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		dragon.appliquerVitesse(vitesseParSeconde);
 
-		collision();
+
+		balle.deplacementBalle();
+		pasEnCollision();
 
 
 		scene.update(evenement);
@@ -99,8 +101,10 @@
 				dragon.deplacerVersLeBas();
 
 				break;
-		}
 
+
+
+		}
 	}
 
 
@@ -108,6 +112,7 @@
 	function gererToucheLevee(evenement) {
 
 		switch (evenement.keyCode) {
+
 			case TOUCHE_GAUCHE:
 				dragon.maintenirPosition();
 				break;
@@ -123,6 +128,17 @@
 			case TOUCHE_BAS:
 				dragon.maintenirPosition();
 				break;
+
+			case TOUCHE_ESPACE:
+
+				if (balle.pasEnCollision) {
+					balle.estAttrapper();
+					//console.log("suce ma bite");
+				}
+				break;
+
+
+
 		}
 	}
 

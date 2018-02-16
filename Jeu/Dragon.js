@@ -14,6 +14,12 @@ function Dragon(scene) {
 	var etatActuelY;
 	this.animBas;
 
+
+	var xCourant;
+	var yCourant;
+	var animationCourante;
+
+
 	var positionCourante = { x: 0, y: 0 };
 
 	var etatCourant;
@@ -26,6 +32,7 @@ function Dragon(scene) {
 		enDirectionHaut: "EN DIRECTION HAUT",
 		enDirectionBas: "EN DIRECTION BAS",
 		enSurplace: "EN SURPLACE",
+		enPossessionBalle: "EN POSSESSION DE LA BALLE",
 	}
 	//player = animationDeplacement(10,10)
 
@@ -36,8 +43,6 @@ function Dragon(scene) {
 		imageDragon.src = "dragons.png";
 
 		imageDragon.onload = terminerChargement;
-
-
 
 
 	}
@@ -79,9 +84,24 @@ function Dragon(scene) {
 
 	}
 
-	// fonction IDLE du personnage
+	function gererAnimation(animation)
+	{
+		xCourant = animationCourante.x;
+		yCourant = animationCourante.y;
+
+		scene.removeChild(animationCourante);
+		animationCourante = animation;
+		animationCourante.x = xCourant;
+		animationCourante.y = yCourant;
+		scene.addChild(animationCourante);
+	}
+
 	this.afficher = function () {
-		scene.addChild(animDroite);
+
+		
+		animationCourante = animBas;
+		scene.addChild(animationCourante);
+
 	}
 
 	this.appliquerVitesse = function (nombreDePas) {
@@ -121,11 +141,9 @@ function Dragon(scene) {
 		if (etatCourant == Etat.enDirectionDroite) {
 		}
 		else {
-			retirerAncienneSprite();
-			scene.addChild(animDroite);
-			animDroite.x = positionCourante.x;
-			animDroite.y = positionCourante.y;
+	
 			etatCourant = Etat.enDirectionDroite;
+			gererAnimation(animDroite);
 
 		}
 
@@ -135,11 +153,9 @@ function Dragon(scene) {
 		if (etatCourant == Etat.enDirectionGauche) {
 		}
 		else {
-			retirerAncienneSprite();
-			scene.addChild(animGauche);
-			animGauche.x = positionCourante.x;
-			animGauche.y = positionCourante.y;
+
 			etatCourant = Etat.enDirectionGauche;
+			gererAnimation(animGauche);
 
 		}
 
@@ -149,11 +165,10 @@ function Dragon(scene) {
 		if (etatCourant == Etat.enDirectionHaut) {
 		}
 		else {
-			retirerAncienneSprite();
-			scene.addChild(animHaut);
-			animHaut.x = positionCourante.x;
-			animHaut.y = positionCourante.y;
+
 			etatCourant = Etat.enDirectionHaut;
+			gererAnimation(animHaut);
+			
 
 		}
 
@@ -163,37 +178,12 @@ function Dragon(scene) {
 		if (etatCourant == Etat.enDirectionBas) {
 		}
 		else {
-			retirerAncienneSprite();
-			scene.addChild(animBas);
-			animBas.x = positionCourante.x;
-			animBas.y = positionCourante.y;
+
 			etatCourant = Etat.enDirectionBas;
+			gererAnimation(animBas);
 
 		}
 
-	}
-
-
-
-	function retirerAncienneSprite() {
-
-		switch (etatCourant) {
-
-			case Etat.enDirectionDroite:
-				scene.removeChild(animDroite);
-				break;
-			case Etat.enDirectionGauche:
-				scene.removeChild(animGauche);
-				break;
-			case Etat.enDirectionHaut:
-				scene.removeChild(animHaut);
-				break;
-			case Etat.enDirectionBas:
-				scene.removeChild(animBas);
-				break;
-
-
-		}
 	}
 
 
@@ -218,7 +208,14 @@ function Dragon(scene) {
 	}
 
 
-	this.attraperBalle = function () {
+	this.attraperBalle = function () 
+	{
+		etatCourant = Etat.enPossessionBalle;
+
+	}
+
+	this.lancerBalle = function()
+	{
 
 	}
 

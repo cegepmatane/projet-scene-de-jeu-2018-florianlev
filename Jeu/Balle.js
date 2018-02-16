@@ -3,6 +3,9 @@ function Balle(stage,canvas){
 	dessin = new createjs.Shape();
 	dessin.x = 150;
 	dessin.y = 150;
+	dessin.height = 10;
+	dessin.width = 10;
+	this.PasEnCollision = true;
 	
 	dy = 4;
 	dx = 2;
@@ -47,9 +50,17 @@ function Balle(stage,canvas){
 	this.rectangleBalle = function()
 	{
 
-		dessin.setBounds(dessin.x,dessin.y,50, 50);
+		dessin.setBounds(dessin.x,dessin.y,dessin.height, dessin.width);
 
 		return dessin.getBounds();
+	}
+
+	this.estAttrapper = function()
+	{
+		dy = 0;
+		dx = 0;
+		//dessin.setBounds(0,0,dessin.height,dessin.width);
+
 	}
 
 
