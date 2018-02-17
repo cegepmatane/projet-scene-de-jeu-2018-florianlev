@@ -4,9 +4,12 @@
 	var dessin;
 	var scene;
 	var contexte;
+	var rectangle;
 
 	var dragon;
 	var balle;
+	var balleEnCollisionAvecDragon = false;
+	var balleEnCollisionAvecEnnemi = false;
 
 	var TOUCHE_GAUCHE = 37;
 	var TOUCHE_DROITE = 39;
@@ -21,7 +24,13 @@
 		rouge: "est Rouge",
 		orange: "est Orange",
 		jaune: "est Jaune",
+		rose: "est Rose",
+		noir: "est Noir",
 	}
+
+	var bY;
+	var bX;
+
 	
 
 	function initialiser() {
@@ -30,11 +39,13 @@
 		contexte = dessin.getContext("2d");
 
 		scene = new createjs.Stage(dessin);
+
 		balle = new Balle(scene, dessin);
 
 		dragon = new Dragon(scene,EtatCouleur.orange);
+		ennemi = new Ennemi(scene);
 		
-
+		
 
 		intervale = setInterval(
 
@@ -42,16 +53,18 @@
 
 				console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 
-				if (dragon.estCharge) {
+				if (dragon.estCharge && ennemi.estCharge) {
 					clearInterval(intervale);
 
 
 					dragon.afficher();
+					ennemi.afficher();
 					balle.afficher();
 
 					document.onkeydown = gererToucheEnfoncee;
 					document.onkeyup = gererToucheLevee;
-					dessin.addEventListener("mouseup", cliqueLevee, false);
+					//dessin.addEventListener("mouseup", cliqueLevee, false);
+					scene.on("stagemouseup", clicRelache);
 
 					createjs.Ticker.framerate = 90;
 					createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
@@ -65,17 +78,31 @@
 
 
 
-	function pasEnCollision() {
-		rectangleDuDragon = dragon.rectangleDuDragon();
+
+	function enCollision() {
+		
 		rectangleDeBalle = balle.rectangleBalle();
+		rectangleEnnemi = ennemi.rectangleEnnemi;
+		//verif collision entre balle et joueur
 
-		if (rectangleDuDragon.x >= rectangleDeBalle.x + rectangleDeBalle.width || rectangleDuDragon.x + rectangleDuDragon.width <= rectangleDeBalle.x || rectangleDuDragon.y >= rectangleDeBalle.y + rectangleDeBalle.height || rectangleDuDragon.y + rectangleDuDragon.height <= rectangleDeBalle.y) {
-			balle.pasEnCollision = false;
+
+		if(dragon.rectangleDuDragon().intersects(balle.rectangleBalle()))
+		{
+			balle.balleEnCollisionAvecDragon = true;
+			
+		}
+
+		else if(ennemi.representerRectangle().intersects(balle.rectangleBalle()))
+		{
+			balle.balleEnCollisionAvecEnnemi = true;
 
 		}
-		else {
-			balle.pasEnCollision = true;
+		else
+		{
+			balle.balleEnCollisionAvecDragon = false;
+			balle.balleEnCollisionAvecEnnemi = false;
 		}
+	
 
 	}
 
@@ -83,12 +110,25 @@
 	function rafraichirDeplacementHero(evenement) {
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		dragon.appliquerVitesse(vitesseParSeconde);
-
-
+		rectangleDuDragon = dragon.rectangleDuDragon();
+		ennemi.poursuivreJoueur(dragon.rectangleDuDragon().x,dragon.rectangleDuDragon().y, balle.estAttrapable,balle.rectangleBalle().x,balle.rectangleBalle().y);
 		balle.deplacementBalle();
-		pasEnCollision();
+		enCollision();
 
 
+		if(balle.estAttrapable && balle.balleEnCollisionAvecEnnemi)
+		{
+			balle.attraper();
+			balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteEnnemi;
+
+		}
+
+
+		if(!balle.estAttrapable && balle.balleEnCollisionAvecEnnemi) 
+		{
+			balle.lancer(rectangleDuDragon.x, rectangleDuDragon.y);
+			balle.estAttrapable = true;
+		}
 		scene.update(evenement);
 	}
 
@@ -140,19 +180,27 @@
 
 			case TOUCHE_ESPACE:
 
-				if (balle.pasEnCollision) {
+				if (balle.balleEnCollisionAvecDragon) {
+					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteAllie;
 					balle.attraper(dragon.getCouleur());
-					//console.log("suce ma bite");
+				}
+				else{
+					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteNeutre;
 				}
 				break;
 		}
 	}
 
-	function cliqueLevee()
+	function clicRelache(evenement)
 	{
-		if(balle.pasEnCollision){
+
+		positionX = evenement.stageX;
+		positionY = evenement.stageY;
+
+
+		if(balle.balleEnCollisionAvecDragon){
 			
-			balle.lancer();
+			balle.lancer(positionX, positionY,bX, bY);
 		}
 		
 	}

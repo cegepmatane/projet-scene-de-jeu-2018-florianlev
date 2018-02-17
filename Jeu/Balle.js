@@ -1,27 +1,46 @@
 function Balle(stage, canvas) {
 
 	dessin = new createjs.Shape();
+	createjs.MotionGuidePlugin.install();
 	dessin.x = 150;
 	dessin.y = 150;
 	dessin.height = 10;
 	dessin.width = 10;
-	this.PasEnCollision = true;
+	
+
+
+	var dejaLance = false;
+	var positionFinalDirectionX;
+	var positionFinalDirectionY;
 
 	dy = 4;
 	dx = 2;
 
 	var couleurCourante;
+	this.estAttrapable = true;
+
 	var EtatCouleur = {
 		bleu: "est Bleu",
 		rouge: "est Rouge",
 		orange: "est Orange",
 		jaune: "est Jaune",
+		rose: "est Rose",
+		noir: "est Noir",
 	}
 
 	var EtatBalle = {
 		estAttraper: "est Attraper",
 		estLancer: "est Lancer",
 	}
+
+	this.EtatEnCaptivite = {
+		enCaptiviteAllie :"En captivite allie",
+		enCaptiviteEnnemi : "En captivite ennemi",
+		enlibertee : "En Liberte",
+	}
+
+	this.etatCaptivite;
+
 
 	var etatCourant;
 
@@ -40,7 +59,7 @@ function Balle(stage, canvas) {
 	function dessinerBalle() {
 
 		dessin.graphics.beginFill("#000000");
-		dessin.graphics.drawCircle(0, 0, 20);
+		dessin.graphics.drawCircle(0, 0, 30);
 
 	}
 
@@ -69,6 +88,19 @@ function Balle(stage, canvas) {
 				dessin.graphics.drawCircle(0, 0, 20);
 				couleurCourante = EtatCouleur.jaune;
 				break;
+			case EtatCouleur.rose:
+				console.log("test");
+				dessin.graphics.beginFill("#f91deb");
+				dessin.graphics.drawCircle(0, 0, 20);
+				couleurCourante = EtatCouleur.rose;
+				break;
+
+			case EtatCouleur.noir:
+				console.log("test");
+				dessin.graphics.beginFill("#000000");
+				dessin.graphics.drawCircle(0, 0, 20);
+				couleurCourante = EtatCouleur.noir;
+				break;
 
 		}
 
@@ -81,30 +113,18 @@ function Balle(stage, canvas) {
 
 	this.deplacementBalle = function () {
 
-		console.log(etatCourant);
+		//console.log(etatCourant);
 		if (etatCourant == EtatBalle.estLancer) {
-			
+
 			if (dessin.x + dx > canvas.width || dessin.x + dx < 0) // Dépassement à droite ou à gauche
 				dx = - dx;
 			if (dessin.y + dy > canvas.height || dessin.y + dy < 0) // Dépassement en bas ou en haut
 				dy = - dy;
 
-			dessin.x += dx; // On déplace la balle
-			dessin.y += dy;
-			console.log(dx);
+			dessin.x = dessin.x + dx; // On déplace la balle
+			dessin.y = dessin.y + dy;
+
 		}
-
-
-		/* else if(etatCourant == EtatBalle.estAttraper)
-		{
-						
-			dx = 0;
-			dy = 0;
-			
-
-		} */
-
-
 
 
 	}
@@ -121,23 +141,44 @@ function Balle(stage, canvas) {
 		etatCourant = EtatBalle.estAttraper;
 		dyTenu = dy;
 		dxTenu = dx;
-		
+
 		dx = 0;
 		dy = 0;
-		
-
 		couleurCourante = couleurJoueur;
+		if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteEnnemi) {
+			couleurCourante = EtatCouleur.rose;
+
+			this.estAttrapable = false;
+		}
+		else if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteNeutre) {
+			couleurCourante = EtatCouleur.noir;
+			this.estAttrapable = true;
+		}
+
 		changerCouleurBalle();
 	}
 
-	this.lancer = function()
-	{	
-		dx = dxTenu + 3;
-		dy = dyTenu + 3;
-		etatCourant = EtatBalle.estLancer;
-	
+	this.lancer = function (positionX, positionY) {
+		if (!dejaLance) {
+			dxTenu = dxTenu + 3;
+			dyTenu = dyTenu + 3;
+			dx = dxTenu;
+			dy = dyTenu;
+			dejaLance = true;
+			if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteAllie) {
+				createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 300);
+			}
+			else if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteEnnemi) {
+				createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 300);
 
-		
+			}
+
+			etatCourant = EtatBalle.estLancer;
+			setTimeout(function () {
+				dejaLance = false;
+			}, 1000);
+		}
+
 	}
 
 

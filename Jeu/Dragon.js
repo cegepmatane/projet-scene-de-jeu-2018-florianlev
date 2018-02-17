@@ -41,6 +41,7 @@ function Dragon(scene, couleur) {
 	function initialiser() {
 
 		imageDragon = new Image();
+		
 		imageDragon.src = "dragons.png";
 
 		imageDragon.onload = terminerChargement;
@@ -104,6 +105,7 @@ function Dragon(scene, couleur) {
 		scene.addChild(animationCourante);
 
 	}
+	
 
 	this.appliquerVitesse = function (nombreDePas) {
 		if (etatCourant == Etat.enDirectionDroite) {
@@ -208,6 +210,8 @@ function Dragon(scene, couleur) {
 		return etatActuelX;
 	}
 
+	
+
 
 	this.attraperBalle = function () 
 	{
@@ -222,7 +226,6 @@ function Dragon(scene, couleur) {
 
 	this.getCouleur = function()
 	{
-		console.log(couleur);
 		return couleur;
 	}
 
