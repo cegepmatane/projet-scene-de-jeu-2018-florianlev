@@ -6,10 +6,13 @@
 	var contexte;
 	var rectangle;
 
+
 	var dragon;
 	var balle;
 	var balleEnCollisionAvecDragon = false;
 	var balleEnCollisionAvecEnnemi = false;
+	var points = 0;
+	var vie = 3;
 
 	var TOUCHE_GAUCHE = 37;
 	var TOUCHE_DROITE = 39;
@@ -28,10 +31,6 @@
 		noir: "est Noir",
 	}
 
-	var bY;
-	var bX;
-
-	
 
 	function initialiser() {
 
@@ -88,19 +87,19 @@
 
 		if(dragon.rectangleDuDragon().intersects(balle.rectangleBalle()))
 		{
-			balle.balleEnCollisionAvecDragon = true;
+			balleEnCollisionAvecDragon = true;
 			
 		}
 
 		else if(ennemi.representerRectangle().intersects(balle.rectangleBalle()))
 		{
-			balle.balleEnCollisionAvecEnnemi = true;
+			balleEnCollisionAvecEnnemi = true;
 
 		}
 		else
 		{
-			balle.balleEnCollisionAvecDragon = false;
-			balle.balleEnCollisionAvecEnnemi = false;
+			balleEnCollisionAvecDragon = false;
+			balleEnCollisionAvecEnnemi = false;
 		}
 	
 
@@ -114,19 +113,24 @@
 		ennemi.poursuivreJoueur(dragon.rectangleDuDragon().x,dragon.rectangleDuDragon().y, balle.estAttrapable,balle.rectangleBalle().x,balle.rectangleBalle().y);
 		balle.deplacementBalle();
 		enCollision();
+		pointsJoueur();
+		vieJoueur();
+		gagnerPartieOuPerdu();
 
 
-		if(balle.estAttrapable && balle.balleEnCollisionAvecEnnemi)
+
+		if(balle.estAttrapable && balleEnCollisionAvecEnnemi)
 		{
-			balle.attraper();
 			balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteEnnemi;
-
+			balle.attraper();
+		
 		}
 
 
-		if(!balle.estAttrapable && balle.balleEnCollisionAvecEnnemi) 
+		if(!balle.estAttrapable && balleEnCollisionAvecEnnemi) 
 		{
 			balle.lancer(rectangleDuDragon.x, rectangleDuDragon.y);
+			balle.etatCaptivite = balle.EtatEnCaptivite.enLibertee;
 			balle.estAttrapable = true;
 		}
 		scene.update(evenement);
@@ -179,8 +183,7 @@
 				break;
 
 			case TOUCHE_ESPACE:
-
-				if (balle.balleEnCollisionAvecDragon) {
+				if (balleEnCollisionAvecDragon) {
 					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteAllie;
 					balle.attraper(dragon.getCouleur());
 				}
@@ -198,12 +201,52 @@
 		positionY = evenement.stageY;
 
 
-		if(balle.balleEnCollisionAvecDragon){
+		if(balleEnCollisionAvecDragon){
 			
-			balle.lancer(positionX, positionY,bX, bY);
+			balle.lancer(positionX, positionY);
 		}
 		
 	}
+
+	function pointsJoueur()
+	{
+		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie)
+		{
+			
+			if(balleEnCollisionAvecEnnemi)
+			{
+				points += 1;
+				console.log(points);
+			}
+		}
+	}
+
+	function vieJoueur()
+	{
+		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteEnnemi)
+		{
+			console.log(balle.etatCaptivite);
+			if(balleEnCollisionAvecDragon)
+			{
+				vie -= 1;
+				console.log(vie);
+			}
+		}
+	}
+
+	function gagnerPartieOuPerdu()
+	{
+		if (points == 3)
+		{
+			alert("GAGNER");
+		}
+		else if (vie == 0)
+		{
+			alert("PERDU");
+		}
+	}
+
+
 
 	initialiser();
 
