@@ -14,10 +14,10 @@
 	var points = 0;
 	var vie = 3;
 
-	var TOUCHE_GAUCHE = 37;
-	var TOUCHE_DROITE = 39;
-	var TOUCHE_HAUT = 38;
-	var TOUCHE_BAS = 40;
+	var TOUCHE_GAUCHE = 65;
+	var TOUCHE_DROITE = 68;
+	var TOUCHE_HAUT = 87;
+	var TOUCHE_BAS = 83;
 	var TOUCHE_ESPACE = 32;
 	
 	var NOMBRE_DE_PAS = 500	;
@@ -113,9 +113,9 @@
 		ennemi.poursuivreJoueur(dragon.rectangleDuDragon().x,dragon.rectangleDuDragon().y, balle.estAttrapable,balle.rectangleBalle().x,balle.rectangleBalle().y);
 		balle.deplacementBalle();
 		enCollision();
-		pointsJoueur();
-		vieJoueur();
-		gagnerPartieOuPerdu();
+		//pointsJoueur();
+		//vieJoueur();
+		//gagnerPartieOuPerdu();
 
 
 
@@ -126,9 +126,10 @@
 		
 		}
 
-
+		console.log(balle.estAttrapable);
 		if(!balle.estAttrapable && balleEnCollisionAvecEnnemi) 
 		{
+			console.log(balle.etatCaptivite);
 			balle.lancer(rectangleDuDragon.x, rectangleDuDragon.y);
 			balle.etatCaptivite = balle.EtatEnCaptivite.enLibertee;
 			balle.estAttrapable = true;

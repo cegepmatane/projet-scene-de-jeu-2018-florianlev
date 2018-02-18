@@ -79,6 +79,7 @@ function Ennemi(scene){
 		}
 		else
 		{
+			console.log("test");
 			animIdle.x = positionBalleX;
 			animIdle.y = positionBalleY;
 		}
