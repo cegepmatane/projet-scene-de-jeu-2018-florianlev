@@ -1,5 +1,8 @@
 (function () {
 
+	var accueilVue;
+	var jeuVue;
+
 
 	var dessin;
 	var scene;
@@ -33,18 +36,21 @@
 
 
 	function initialiser() {
-
+		window.addEventListener("hashchange", interpreterEvenementLocation);
 		dessin = document.getElementById("dessin");
-		contexte = dessin.getContext("2d");
+		//contexte = dessin.getContext("2d");
 		createjs.MotionGuidePlugin.install();
 
 		scene = new createjs.Stage(dessin);
-
+		
+		dragon = new Dragon(scene,EtatCouleur.orange);
+		
+		accueilVue = new AccueilVue(dragon);
+		accueilVue.afficher();
+		jeuVue = new JeuVue(dragon);
 		balle = new Balle(scene, dessin);
 
-		dragon = new Dragon(scene,EtatCouleur.orange);
 		ennemi = new Ennemi(scene);
-		
 		
 
 		intervale = setInterval(
@@ -75,8 +81,19 @@
 
 	}
 
+	function interpreterEvenementLocation(evenement)
+	{
 
-
+		var intructionNavigation = window.location.hash;
+		if(!intructionNavigation || intructionNavigation.match(/^#$/) || intructionNavigation.match(/^#accueil$/))
+		{
+			accueilVue.afficher();
+		}
+		else if (intructionNavigation.match(/^#jeu$/))
+		{
+			jeuVue.afficher();
+		}
+	}
 
 
 	function enCollision() {
@@ -115,9 +132,9 @@
 		
 		
 		enCollision();
-		//pointsJoueur();
-		//vieJoueur();
-		//gagnerPartieOuPerdu();
+		pointsJoueur();
+		vieJoueur();
+		gagnerPartieOuPerdu();
 
 		
 		
@@ -140,7 +157,7 @@
 			balle.etatCaptivite = balle.EtatEnCaptivite.enlibertee;
 			//balle.estAttrapable = true;
 		}
-
+		console.log(balle.etatCaptivite);
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie)
 		{
 			ennemi.fuir();
@@ -232,7 +249,7 @@
 		positionY = evenement.stageY;
 
 
-		if(balleEnCollisionAvecDragon){
+		if(balleEnCollisionAvecDragon && balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie){
 			
 			balle.lancer(positionX, positionY);
 		}
@@ -243,11 +260,11 @@
 	{
 		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie)
 		{
-			
 			if(balleEnCollisionAvecEnnemi)
 			{
+				
 				points += 1;
-				console.log(points);
+				console.log("points" + points);
 			}
 		}
 	}
@@ -256,11 +273,11 @@
 	{
 		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteEnnemi)
 		{
-			console.log(balle.etatCaptivite);
+			console.log(balleEnCollisionAvecDragon);
 			if(balleEnCollisionAvecDragon)
 			{
 				vie -= 1;
-				console.log(vie);
+				console.log("vie " + vie);
 			}
 		}
 	}

@@ -167,6 +167,7 @@ function Balle(stage, canvas) {
 			dejaLance = true;
 			if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteAllie) {
 				createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 300);
+				this.etatCaptivite = this.EtatEnCaptivite.enCaptiviteAllie;
 			}
 
 			//console.log(etatCaptivite);
@@ -175,9 +176,17 @@ function Balle(stage, canvas) {
 				setTimeout(function (){
 					createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 500);
 				}, 500);
-
 			} 
-			this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
+
+			setTimeout(function (){
+				couleurCourante = EtatCouleur.noir;
+				changerCouleurBalle();
+				this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
+
+				
+
+			},1000);
+			//this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
 			etatCourant = EtatBalle.estLancer;
 			setTimeout(function () {
 				dejaLance = false;

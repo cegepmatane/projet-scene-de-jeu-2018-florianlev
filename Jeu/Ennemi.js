@@ -70,7 +70,6 @@ function Ennemi(scene){
 
 	this.poursuivreJoueur = function(positionJoueurX, positionJoueurY, balleEstAttrapable,etatCaptiviteLibertee, etatCaptiviteEnnemi, positionBalleX,positionBalleY)
 	{
-		console.log(balleEstAttrapable);
 		//console.log(balleEstAttrapable);
 		if(balleEstAttrapable == etatCaptiviteLibertee)
 		{
@@ -101,7 +100,7 @@ function Ennemi(scene){
 
 		x = Math.floor((Math.random() * 600) + 1);
 		y = Math.floor((Math.random() * 600) + 1);
-		createjs.Tween.get(animIdle).to({x:x,y:y}, 1000);
+		createjs.Tween.get(animIdle).to({x:x,y:y}, 60);
 	}
 
 	this.exploser = function(){
