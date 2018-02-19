@@ -36,6 +36,7 @@
 
 		dessin = document.getElementById("dessin");
 		contexte = dessin.getContext("2d");
+		createjs.MotionGuidePlugin.install();
 
 		scene = new createjs.Stage(dessin);
 
@@ -109,33 +110,62 @@
 	function rafraichirDeplacementHero(evenement) {
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		dragon.appliquerVitesse(vitesseParSeconde);
-		rectangleDuDragon = dragon.rectangleDuDragon();
-		ennemi.poursuivreJoueur(dragon.rectangleDuDragon().x,dragon.rectangleDuDragon().y, balle.estAttrapable,balle.rectangleBalle().x,balle.rectangleBalle().y);
 		balle.deplacementBalle();
+		rectangleDuDragon = dragon.rectangleDuDragon();
+		
+		
 		enCollision();
 		//pointsJoueur();
 		//vieJoueur();
 		//gagnerPartieOuPerdu();
 
-
-
-		if(balle.estAttrapable && balleEnCollisionAvecEnnemi)
+		
+		
+		if(balle.etatCaptivite == balle.EtatEnCaptivite.enlibertee && balleEnCollisionAvecEnnemi)
 		{
+			
 			balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteEnnemi;
+			
 			balle.attraper();
+			//balle.estAttrapable = false;
 		
 		}
+		ennemi.poursuivreJoueur(rectangleDuDragon.x,rectangleDuDragon.y, balle.etatCaptivite,balle.EtatEnCaptivite.enlibertee, balle.EtatEnCaptivite.enCaptiviteEnnemi, balle.rectangleBalle().x, balle.rectangleBalle().y);
 
-		console.log(balle.estAttrapable);
-		if(!balle.estAttrapable && balleEnCollisionAvecEnnemi) 
+		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteEnnemi ) 
 		{
-			console.log(balle.etatCaptivite);
+			console.log("test");
+			
 			balle.lancer(rectangleDuDragon.x, rectangleDuDragon.y);
-			balle.etatCaptivite = balle.EtatEnCaptivite.enLibertee;
-			balle.estAttrapable = true;
+			balle.etatCaptivite = balle.EtatEnCaptivite.enlibertee;
+			//balle.estAttrapable = true;
+		}
+
+		if (balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie)
+		{
+			ennemi.fuir();
 		}
 		scene.update(evenement);
 	}
+
+
+/* 	function ennemiPoursuivreJoueur()
+	{
+
+
+		if(!balle.balleEstAttrapable)
+		{
+			rectangleDuDragon = dragon.rectangleDuDragon();
+			console.log(ennemi.animIdle);
+			createjs.Tween.get(ennemi.animIdle).to({x: rectangleDuDragon.x , y: rectangleDuDragon.y}, 2000);
+
+		}
+
+		else if(balle.balleEstAttrapable)
+		{
+			ennemi.setPositionEnnemi(balle.rectangleBalle().x, balle.rectangleBalle().y);
+		}
+	} */
 
 	function gererToucheEnfoncee(evenement) {
 

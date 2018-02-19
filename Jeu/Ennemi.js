@@ -49,7 +49,7 @@ function Ennemi(scene){
 			});
 
 		animIdle = new createjs.Sprite(spriteEnnemi, "idle");
-
+		console.log(ennemi.animIdle);
 		rectangleEnnemi = animIdle.getTransformedBounds();
 		
 		ennemi.estCharge = true;
@@ -68,16 +68,17 @@ function Ennemi(scene){
 		return rectangleAnimationEnnemi = animIdle.getTransformedBounds();
 	}
 
-	this.poursuivreJoueur = function(positionJoueurX, positionJoueurY, balleEstAttrapable, positionBalleX,positionBalleY)
+	this.poursuivreJoueur = function(positionJoueurX, positionJoueurY, balleEstAttrapable,etatCaptiviteLibertee, etatCaptiviteEnnemi, positionBalleX,positionBalleY)
 	{
-		
-
-		if(balleEstAttrapable)
+		console.log(balleEstAttrapable);
+		//console.log(balleEstAttrapable);
+		if(balleEstAttrapable == etatCaptiviteLibertee)
 		{
 			createjs.Tween.get(animIdle).to({x:positionJoueurX,y:positionJoueurY}, 2000);
+			
 
 		}
-		else
+		else if (balleEstAttrapable == etatCaptiviteEnnemi)
 		{
 			console.log("test");
 			animIdle.x = positionBalleX;
@@ -86,9 +87,26 @@ function Ennemi(scene){
 
 
 	}
+ 
+	this.setPositionEnnemi = function(x,y)
+	{
+		console.log(x);
+		
+		animIdle.x = x;
+		animIdle.y = y;
+	}
+
+	this.fuir = function()
+	{
+
+		x = Math.floor((Math.random() * 600) + 1);
+		y = Math.floor((Math.random() * 600) + 1);
+		createjs.Tween.get(animIdle).to({x:x,y:y}, 1000);
+	}
 
 	this.exploser = function(){
 		
+
 	}
 
 	initialiser();

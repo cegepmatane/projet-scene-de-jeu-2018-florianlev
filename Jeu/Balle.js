@@ -37,7 +37,7 @@ function Balle(stage, canvas) {
 		enlibertee : "En Liberte",
 	}
 
-	this.etatCaptivite;
+	this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
 
 
 	var etatCourant;
@@ -87,7 +87,6 @@ function Balle(stage, canvas) {
 				couleurCourante = EtatCouleur.jaune;
 				break;
 			case EtatCouleur.rose:
-				console.log("test");
 				dessin.graphics.beginFill("#f91deb");
 				dessin.graphics.drawCircle(0, 0, 20);
 				couleurCourante = EtatCouleur.rose;
@@ -145,11 +144,13 @@ function Balle(stage, canvas) {
 		dy = 0;
 		couleurCourante = couleurJoueur;
 		if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteEnnemi) {
+			//this.estAttrapable = false;
 			couleurCourante = EtatCouleur.rose;
-
-			this.estAttrapable = false;
+			//console.log(this.estAttrapable);
+			//this.estAttrapable = false;
 		}
 		else if (this.etatCaptivite == this.EtatEnCaptivite.enlibertee) {
+			console.log("porue");
 			couleurCourante = EtatCouleur.noir;
 			this.estAttrapable = true;
 		}
@@ -172,10 +173,10 @@ function Balle(stage, canvas) {
 			
 			else if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteEnnemi) {
 				setTimeout(function (){
-					createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 300);
-				}, 3000);
+					createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 500);
+				}, 500);
 
-			}
+			} 
 			this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
 			etatCourant = EtatBalle.estLancer;
 			setTimeout(function () {
