@@ -1,4 +1,4 @@
-AccueilVue = function(joueur)
+AccueilVue = function()
 {
     var corps;
     var formAccueil;
@@ -10,11 +10,11 @@ AccueilVue = function(joueur)
         corps = document.getElementsByTagName("body")[0];
     }
 
-    function enregistrerNom(evenement)
+/*     function enregistrerNom(evenement)
     {
         joueur.nom = champNom.value;
     }
-
+ */
     this.afficher = function()
     {
         corps.innerHTML = AccueilVue.pageAccueilHTML;
@@ -26,7 +26,7 @@ AccueilVue = function(joueur)
 									 });
         boutonJouer = document.getElementById("bouton-jouer");
         champNom = document.getElementById("nom");
-		boutonJouer.addEventListener("click", enregistrerNom);
+		//boutonJouer.addEventListener("click", enregistrerNom);
     }
 
     initialiser();

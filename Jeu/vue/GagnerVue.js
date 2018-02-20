@@ -1,4 +1,4 @@
-JeuVue = function(){
+GagnerVue = function(){
 	var corps;
     var nomJoueur;
 	
@@ -9,7 +9,7 @@ JeuVue = function(){
 
 	this.afficher = function()
 	{
-		corps.innerHTML = JeuVue.pageJeuHTML;
+		corps.innerHTML = GagnerVue.pageJeuHTML;
         nomJoueur = document.getElementById("nom-joueur");
         //nomJoueur.innerHTML = joueur.nom;
 	}
@@ -17,4 +17,4 @@ JeuVue = function(){
 	initialiser();
 	
 }
-JeuVue.pageJeuHTML = document.getElementById("page-jeu").innerHTML;
+GagnerVue.pageJeuHTML = document.getElementById("page-gagner").innerHTML;

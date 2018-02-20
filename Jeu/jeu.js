@@ -3,6 +3,9 @@
 	var accueilVue;
 	var jeuVue;
 
+	var gagnerVue;
+	var perduVue;
+
 
 	var dessin;
 	var scene;
@@ -25,6 +28,8 @@
 	
 	var NOMBRE_DE_PAS = 500	;
 
+	var dejaTouchee = false;
+
 	var EtatCouleur = {
 		bleu: "est Bleu",
 		rouge: "est Rouge",
@@ -36,23 +41,34 @@
 
 
 	function initialiser() {
-		window.addEventListener("hashchange", interpreterEvenementLocation);
-		dessin = document.getElementById("dessin");
+		
+		
 		//contexte = dessin.getContext("2d");
-		createjs.MotionGuidePlugin.install();
+		//createjs.MotionGuidePlugin.install();
 
-		scene = new createjs.Stage(dessin);
 		
-		dragon = new Dragon(scene,EtatCouleur.orange);
 		
-		accueilVue = new AccueilVue(dragon);
+		
+
+		jeuVue = new JeuVue();
+		accueilVue = new AccueilVue();
+		gagnerVue = new GagnerVue();
+		perduVue = new PerduVue();
 		accueilVue.afficher();
-		jeuVue = new JeuVue(dragon);
-		balle = new Balle(scene, dessin);
 
-		ennemi = new Ennemi(scene);
+		window.addEventListener("hashchange", interpreterEvenementLocation);
 		
 
+	}
+		
+
+	function commencerAJouer() 
+	{
+		dessin = document.getElementById("dessin");
+		scene = new createjs.Stage(dessin);
+		dragon = new Dragon(scene,EtatCouleur.orange);
+		ennemi = new Ennemi(scene);
+		balle = new Balle(scene, dessin);
 		intervale = setInterval(
 
 			function () {
@@ -79,6 +95,7 @@
 				}
 			}, 1);
 
+	
 	}
 
 	function interpreterEvenementLocation(evenement)
@@ -92,8 +109,9 @@
 		else if (intructionNavigation.match(/^#jeu$/))
 		{
 			jeuVue.afficher();
+			commencerAJouer();
 		}
-	}
+	} 
 
 
 	function enCollision() {
@@ -102,24 +120,29 @@
 		rectangleEnnemi = ennemi.rectangleEnnemi;
 		//verif collision entre balle et joueur
 
+		
 
-		if(dragon.rectangleDuDragon().intersects(balle.rectangleBalle()))
-		{
-			balleEnCollisionAvecDragon = true;
-			
-		}
-
-		else if(ennemi.representerRectangle().intersects(balle.rectangleBalle()))
-		{
-			balleEnCollisionAvecEnnemi = true;
-
-		}
-		else
-		{
-			balleEnCollisionAvecDragon = false;
-			balleEnCollisionAvecEnnemi = false;
-		}
+		
+			if(dragon.rectangleDuDragon().intersects(balle.rectangleBalle()))
+			{
+				balleEnCollisionAvecDragon = true;
+				
+			}
 	
+			else if(ennemi.representerRectangle().intersects(balle.rectangleBalle()))
+			{
+				setTimeout( function(){
+
+				balleEnCollisionAvecEnnemi = true;
+			},300);
+			}
+			else
+			{
+				balleEnCollisionAvecDragon = false;
+				balleEnCollisionAvecEnnemi = false;
+			}
+		
+
 
 	}
 
@@ -133,7 +156,7 @@
 		
 		enCollision();
 		pointsJoueur();
-		vieJoueur();
+		
 		gagnerPartieOuPerdu();
 
 		
@@ -152,12 +175,13 @@
 		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteEnnemi ) 
 		{
 			console.log("test");
+			vieJoueur();
 			
-			balle.lancer(rectangleDuDragon.x, rectangleDuDragon.y);
+				balle.lancer(rectangleDuDragon.x, rectangleDuDragon.y);
+			
 			balle.etatCaptivite = balle.EtatEnCaptivite.enlibertee;
 			//balle.estAttrapable = true;
 		}
-		console.log(balle.etatCaptivite);
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie)
 		{
 			ennemi.fuir();
@@ -271,6 +295,7 @@
 
 	function vieJoueur()
 	{
+		console.log (balle.etatCaptivite);
 		if(balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteEnnemi)
 		{
 			console.log(balleEnCollisionAvecDragon);
@@ -286,11 +311,11 @@
 	{
 		if (points == 3)
 		{
-			alert("GAGNER");
+			gagnerVue.afficher();
 		}
 		else if (vie == 0)
 		{
-			alert("PERDU");
+			perduVue.afficher();
 		}
 	}
 

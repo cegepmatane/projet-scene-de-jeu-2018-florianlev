@@ -1,5 +1,5 @@
 function Balle(stage, canvas) {
-
+	var balle = this;
 	dessin = new createjs.Shape();
 	createjs.MotionGuidePlugin.install();
 	dessin.x = 150;
@@ -122,8 +122,6 @@ function Balle(stage, canvas) {
 			dessin.y = dessin.y + dy;
 
 		}
-
-
 	}
 
 
@@ -176,12 +174,12 @@ function Balle(stage, canvas) {
 				setTimeout(function (){
 					createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 500);
 				}, 500);
-			} 
+			}
 
 			setTimeout(function (){
 				couleurCourante = EtatCouleur.noir;
 				changerCouleurBalle();
-				this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
+				balle.etatCaptivite = balle.EtatEnCaptivite.enlibertee;
 
 				
 

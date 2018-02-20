@@ -98,9 +98,8 @@ function Ennemi(scene){
 	this.fuir = function()
 	{
 
-		x = Math.floor((Math.random() * 600) + 1);
-		y = Math.floor((Math.random() * 600) + 1);
-		createjs.Tween.get(animIdle).to({x:x,y:y}, 60);
+		
+		createjs.Tween.get(animIdle).to({x:124,y:730}, 1000);
 	}
 
 	this.exploser = function(){
