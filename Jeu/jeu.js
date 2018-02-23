@@ -41,14 +41,6 @@
 
 
 	function initialiser() {
-		
-		
-		//contexte = dessin.getContext("2d");
-		//createjs.MotionGuidePlugin.install();
-
-		
-		
-		
 
 		jeuVue = new JeuVue();
 		accueilVue = new AccueilVue();
@@ -131,10 +123,10 @@
 	
 			else if(ennemi.representerRectangle().intersects(balle.rectangleBalle()))
 			{
-				setTimeout( function(){
+				//setTimeout( function(){
 
 				balleEnCollisionAvecEnnemi = true;
-			},300);
+			//},300);
 			}
 			else
 			{
@@ -189,24 +181,6 @@
 		scene.update(evenement);
 	}
 
-
-/* 	function ennemiPoursuivreJoueur()
-	{
-
-
-		if(!balle.balleEstAttrapable)
-		{
-			rectangleDuDragon = dragon.rectangleDuDragon();
-			console.log(ennemi.animIdle);
-			createjs.Tween.get(ennemi.animIdle).to({x: rectangleDuDragon.x , y: rectangleDuDragon.y}, 2000);
-
-		}
-
-		else if(balle.balleEstAttrapable)
-		{
-			ennemi.setPositionEnnemi(balle.rectangleBalle().x, balle.rectangleBalle().y);
-		}
-	} */
 
 	function gererToucheEnfoncee(evenement) {
 
