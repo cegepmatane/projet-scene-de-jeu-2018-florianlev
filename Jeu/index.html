@@ -5,16 +5,11 @@
 	<meta charset="utf-8">
 
 	<style>
-        
-        #dessin
-        {
-            border:solid 1px #dddddd;
-        }
-        
-    </style>
 		#dessin {
 			border: solid 1px #dddddd;
 		}
+	</style>
+	#dessin { border: solid 1px #dddddd; }
 	</style>
 </head>
 
@@ -43,7 +38,7 @@
 		</script>
 
 	<script type="text/plain" id="page-jeu">
-	<canvas id="dessin" width="800" height="800"></canvas>
+	<canvas id="dessin" width="1200" height="800"></canvas>
 	<div class="menu">
 			<a href="#accueil">Accueil</a>
 			<a href="#fin-perdu">Fin perdu</a>
@@ -51,31 +46,32 @@
 		  </div>
 </script>
 
-<script type="text/plain" id="page-gagner">
+	<script type="text/plain" id="page-gagner">
 	<h2>BRAVO</h2>
 	<a href="#accueil">Accueil</a>
 </script>
 
-<script type="text/plain" id="page-perdu">
+	<script type="text/plain" id="page-perdu">
 	<h2>PERDU</h2>
 	<a href="#accueil">Accueil</a>
 </script>
 	<script type="text/javascript" src="easeljs.min.js"></script>
 	<script type="text/javascript" src="createjs.min.js"></script>
 
-	
+
 	<script type="text/javascript" src="vue/AccueilVue.js"></script>
-	 <script type="text/javascript" src="vue/JeuVue.js"></script>
-	 <script type="text/javascript" src="vue/GagnerVue.js"></script>
+	<script type="text/javascript" src="vue/JeuVue.js"></script>
+	<script type="text/javascript" src="vue/GagnerVue.js"></script>
 	<script type="text/javascript" src="vue/PerduVue.js"></script>
 
+	<script type="text/javascript" src="ArrierePlan.js"></script>
 	<script src="Dragon.js"></script>
 	<script src="Ennemi.js"></script>
 	<script src="Balle.js"></script>
 	<script src="jeu.js"></script>
-	
-	
-	
+
+
+
 
 
 
