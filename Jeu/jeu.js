@@ -225,9 +225,10 @@
 					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteAllie;
 					balle.attraper(dragon.getCouleur());
 				}
-				else {
+				/*else {
+					console.log(balle.etatCaptivite);
 					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteNeutre;
-				}
+				}*/
 				break;
 		}
 	}
