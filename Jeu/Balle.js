@@ -6,7 +6,7 @@ function Balle(stage, canvas) {
 	dessin.y = 150;
 	dessin.height = 10;
 	dessin.width = 10;
-	
+
 
 
 	var dejaLance = false;
@@ -32,9 +32,9 @@ function Balle(stage, canvas) {
 	}
 
 	this.EtatEnCaptivite = {
-		enCaptiviteAllie :"En captivite allie",
-		enCaptiviteEnnemi : "En captivite ennemi",
-		enlibertee : "En Liberte",
+		enCaptiviteAllie: "En captivite allie",
+		enCaptiviteEnnemi: "En captivite ennemi",
+		enlibertee: "En Liberte",
 	}
 
 	this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
@@ -134,7 +134,7 @@ function Balle(stage, canvas) {
 
 	this.attraper = function (couleurJoueur) {
 		etatCourant = EtatBalle.estAttraper;
-		
+
 		dyTenu = dy;
 		dxTenu = dx;
 
@@ -169,21 +169,21 @@ function Balle(stage, canvas) {
 			}
 
 			//console.log(etatCaptivite);
-			
+
 			else if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteEnnemi) {
-				setTimeout(function (){
+				setTimeout(function () {
 					createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 500);
 				}, 500);
 			}
 
-			setTimeout(function (){
+			setTimeout(function () {
 				couleurCourante = EtatCouleur.noir;
 				changerCouleurBalle();
 				balle.etatCaptivite = balle.EtatEnCaptivite.enlibertee;
 
-				
 
-			},1000);
+
+			}, 1000);
 			//this.etatCaptivite = this.EtatEnCaptivite.enlibertee;
 			etatCourant = EtatBalle.estLancer;
 			setTimeout(function () {
