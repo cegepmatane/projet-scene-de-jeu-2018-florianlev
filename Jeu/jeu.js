@@ -11,6 +11,7 @@
 	var scene;
 	var contexte;
 	var rectangle;
+	var serveur;
 
 
 	var dragon;
@@ -41,7 +42,7 @@
 
 
 	function initialiser() {
-
+		serveur = new Connection();
 		jeuVue = new JeuVue();
 		accueilVue = new AccueilVue();
 		gagnerVue = new GagnerVue();
@@ -74,7 +75,7 @@
 					dragon.afficher();
 					ennemi.afficher();
 					balle.afficher();
-					
+
 					document.onkeydown = gererToucheEnfoncee;
 					document.onkeyup = gererToucheLevee;
 					//dessin.addEventListener("mouseup", cliqueLevee, false);
