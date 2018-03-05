@@ -146,6 +146,9 @@
 		pointsJoueur();
 
 		gagnerPartieOuPerdu();
+		console.log("X : " + dragon.rectangleDuDragon().x);
+		console.log("Y :" + dragon.rectangleDuDragon().y);
+		
 
 
 

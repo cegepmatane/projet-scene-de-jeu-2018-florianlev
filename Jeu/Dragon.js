@@ -49,6 +49,8 @@ function Dragon(scene, couleur) {
 
 	}
 
+
+
 	function terminerChargement() {
 
 
@@ -72,7 +74,7 @@ function Dragon(scene, couleur) {
 		animGauche = new createjs.Sprite(spriteDragon, "marcheGauche");
 		animBas = new createjs.Sprite(spriteDragon, "marcheBas");
 		dragon.estCharge = true;
-
+		
 		animDroite.x = positionCourante.x;
 		animDroite.y = positionCourante.y;
 		etatCourant = Etat.enDirectionDroite;

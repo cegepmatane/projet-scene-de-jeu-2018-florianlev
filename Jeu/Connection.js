@@ -6,9 +6,9 @@ function Connection() {
     var configuration = {};
     configuration.host = "127.0.0.1";
     configuration.port = 8080;
-    configuration.zone = "AlloMonde";
+    configuration.zone = "JeuBalle";
     configuration.debug = false;
-    configuration.room = 'AlloGroupe';
+    configuration.room = 'RoomDragon';
 
     function initialiser() {
         tracer('onload -> initialiser()', false);
@@ -22,7 +22,7 @@ function Connection() {
         ouvrirContactServeur();
     }
     initialiser();
-
+    
     function ouvrirContactServeur() {
         serveur.connect();
     }
