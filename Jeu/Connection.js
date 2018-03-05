@@ -69,9 +69,9 @@ function Connection() {
     function executerApresVariableDeSalon(e) {
         tracer('executerApresVariableDeSalon()');
         tracer('variables recues ' + e.changedVars);
-        if (e.changedVars.indexOf('salutation') != -1) {
-            tracer('salutation == ' + e.room.getVariable('salutation').value, true);
-        }
+        //if (e.changedVars.indexOf('salutation') != -1) {
+            tracer('salutation == ' + e.room.getVariable('couleurJ1').value, true);
+        //}
 
     }
 
