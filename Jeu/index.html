@@ -34,12 +34,13 @@
 					<form id="form-accueil" method="post">
 						<div>
 							<label for="nom">Votre nom de joueur</label>
-							<input type="text" id="nom" name="nom" >
+							<input type="text" id="pseudo" name="pseudo"></input>
 						</div>
 			
 						<!-- La navigation se fait par l'ajout de #jeu à l'URL
 							 Il n'y a pas de rechargement de la page car c'est une technique de navigation
 							 HTML dans une même page. -->
+
 						<a id="bouton-jouer" href="#jeu">Jouer</a>
 					</form>
 				</section>
@@ -81,6 +82,16 @@
 	<script src="Ennemi.js"></script>
 	<script src="Balle.js"></script>
 	<script src="jeu.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+	
+			
+			// Add event listeners
+			$("#bouton-jouer").click(onLoginBtClick);
+
+	    });
+	</script>
 
 
 

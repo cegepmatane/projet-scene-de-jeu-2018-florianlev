@@ -42,7 +42,24 @@
 
 
 	function initialiser() {
-		serveur = new Connection();
+		//serveur = new Connection();
+
+
+		//Creation de la connexion
+		var serveur;
+		var configuration = {};
+		configuration.host = "127.0.0.1";
+		configuration.port = 8080;
+		configuration.zone = "JeuBalle";
+		configuration.debug = false;
+		configuration.room = 'RoomDragon';
+
+		//Ajout des evenement ecouteurs
+
+		serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
+
+
+		//Initialisation des vues
 		jeuVue = new JeuVue();
 		accueilVue = new AccueilVue();
 		gagnerVue = new GagnerVue();
@@ -54,8 +71,45 @@
 
 	}
 
+	//Serveur event handler
+
+	function executerApresOuvertureContactServeur(e) {
+		if (e.success) {
+			tracer("Connecter au serveur !");
+
+			var pseudo = "A CHANGER";
+			serveur.send(new SFS2X.Requests.System.LoginRequest(pseudo));
+		}
+
+		else
+		{
+			var error = "connection raté ";
+			
+		}
+	}
+
+
+	//connexion a la room
+	this.surBoutonJouer = function()
+	{
+
+		serveur.connect();
+
+		sfs.send(new SFS2X.Requests.System.JoinRoomRequest(configuration.room));
+
+	}
+
+	//Methode privée
+
+	function tracer(message, alerte) {
+		console.log(message);
+		if (alerte) alert(message);
+	}
+
 
 	function commencerAJouer() {
+		//serveur.ouvrirSession(accueilVue.getPseudo());
+
 		dessin = document.getElementById("dessin");
 		scene = new createjs.Stage(dessin);
 		arrierePlan = new ArrierePlan(scene);
@@ -148,7 +202,7 @@
 		gagnerPartieOuPerdu();
 		console.log("X : " + dragon.rectangleDuDragon().x);
 		console.log("Y :" + dragon.rectangleDuDragon().y);
-		
+
 
 
 

@@ -25,9 +25,15 @@ AccueilVue = function()
 										return false;
 									 });
         boutonJouer = document.getElementById("bouton-jouer");
-        champNom = document.getElementById("nom");
+        champNom = document.getElementById("pseudo").value;
 		//boutonJouer.addEventListener("click", enregistrerNom);
     }
+
+    this.getPseudo = function()
+    {
+        console.log(document.getElementById("pseudo").value);
+        return champNom;
+    }   
 
     initialiser();
 }
