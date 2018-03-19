@@ -67,7 +67,6 @@ var ArrierePlan = function (scene) {
 
         matriceNuage.translate(-ArrierePlan.Configuration.vitesseNuage * acceleration,3 );
         matriceHerbe.translate(-ArrierePlan.Configuration.vietesseHerbe * acceleration,1);
-        console.log("arrierePlan acceleration: "+acceleration);
 	
     }
 

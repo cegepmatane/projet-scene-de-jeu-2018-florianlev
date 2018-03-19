@@ -1,5 +1,6 @@
 (function () {
 
+
 	var accueilVue;
 	var jeuVue;
 
@@ -40,24 +41,20 @@
 		noir: "est Noir",
 	}
 
+	var bouton;
+
+	//Creation de la connexion
+	var serveur;
+	var configuration = {};
+	configuration.host = "127.0.0.1";
+	configuration.port = 8080;
+	configuration.zone = "JeuBalle";
+	configuration.debug = false;
+	configuration.room = 'RoomDragon';
+
 
 	function initialiser() {
 		//serveur = new Connection();
-
-
-		//Creation de la connexion
-		var serveur;
-		var configuration = {};
-		configuration.host = "127.0.0.1";
-		configuration.port = 8080;
-		configuration.zone = "JeuBalle";
-		configuration.debug = false;
-		configuration.room = 'RoomDragon';
-
-		//Ajout des evenement ecouteurs
-
-		serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
-
 
 		//Initialisation des vues
 		jeuVue = new JeuVue();
@@ -68,35 +65,63 @@
 
 		window.addEventListener("hashchange", interpreterEvenementLocation);
 
+		//Ajout des evenement ecouteurs
+		serveur = new SFS2X.SmartFox(configuration);
+		serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
+		serveur.addEventListener(SFS2X.SFSEvent.LOGIN, executerApresOuvertureSession, this);
+		serveur.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, executerApresEntreeSalon, this);
+
 
 	}
 
 	//Serveur event handler
 
 	function executerApresOuvertureContactServeur(e) {
-		if (e.success) {
-			tracer("Connecter au serveur !");
+		tracer("executerApresOuvrirContactServeur()");
+		tracer("succes de la connection " + e.success);
 
-			var pseudo = "A CHANGER";
-			serveur.send(new SFS2X.Requests.System.LoginRequest(pseudo));
+		if (e.success) {
+			tracer("Connecté au serveur !");
+
+			var pseudo = $("#pseudo").val();
+
+			console.log(pseudo);
+			serveur.send(new SFS2X.Requests.System.LoginRequest(""));
 		}
 
-		else
-		{
+		else {
 			var error = "connection raté ";
-			
+
 		}
 	}
 
+	function executerApresOuvertureSession(e) {
+		tracer("executerApresOuvertureSession()");
+		tracer("l'usager " + e.user.name + " est dans la zone " + e.zone);
+
+		entrerSalon();
+
+	}
+
+	function executerApresEntreeSalon(e) {
+		tracer('executerApresEntreeSalon()');
+		tracer('Entree dans le salon ' + e.room + ' reussie');
+		dragon = new Dragon(scene, EtatCouleur.orange);
+
+
+
+	}
 
 	//connexion a la room
-	this.surBoutonJouer = function()
-	{
-
+	this.ouvrirConnexion = function () {
+		tracer("ouvrirConnexion");
 		serveur.connect();
 
-		sfs.send(new SFS2X.Requests.System.JoinRoomRequest(configuration.room));
+	}
 
+	function entrerSalon() {
+		tracer("entrerSalon()");
+		serveur.send(new SFS2X.Requests.System.JoinRoomRequest(configuration.room));
 	}
 
 	//Methode privée
@@ -113,31 +138,36 @@
 		dessin = document.getElementById("dessin");
 		scene = new createjs.Stage(dessin);
 		arrierePlan = new ArrierePlan(scene);
-		dragon = new Dragon(scene, EtatCouleur.orange);
+		//dragon = new Dragon(scene, EtatCouleur.orange);
 		ennemi = new Ennemi(scene);
 		balle = new Balle(scene, dessin);
 		intervale = setInterval(
 
 			function () {
 
-				console.log("Jeu->personnage.estCharge " + dragon.estCharge);
+				//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
+				try {
+					if (dragon.estCharge && ennemi.estCharge) {
+						clearInterval(intervale);
 
-				if (dragon.estCharge && ennemi.estCharge) {
-					clearInterval(intervale);
+						arrierePlan.afficher();
+						dragon.afficher();
+						ennemi.afficher();
+						balle.afficher();
 
-					arrierePlan.afficher();
-					dragon.afficher();
-					ennemi.afficher();
-					balle.afficher();
+						document.onkeydown = gererToucheEnfoncee;
+						document.onkeyup = gererToucheLevee;
+						//dessin.addEventListener("mouseup", cliqueLevee, false);
+						scene.on("stagemouseup", clicRelache);
 
-					document.onkeydown = gererToucheEnfoncee;
-					document.onkeyup = gererToucheLevee;
-					//dessin.addEventListener("mouseup", cliqueLevee, false);
-					scene.on("stagemouseup", clicRelache);
+						createjs.Ticker.framerate = 90;
+						createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
+					}
 
-					createjs.Ticker.framerate = 90;
-					createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
 
+				}
+				catch(err){
+					console.log("Joueur pas encore charger !");
 
 				}
 			}, 1);
@@ -164,9 +194,6 @@
 		rectangleEnnemi = ennemi.rectangleEnnemi;
 		//verif collision entre balle et joueur
 
-
-
-
 		if (dragon.rectangleDuDragon().intersects(balle.rectangleBalle())) {
 			balleEnCollisionAvecDragon = true;
 
@@ -182,9 +209,6 @@
 			balleEnCollisionAvecDragon = false;
 			balleEnCollisionAvecEnnemi = false;
 		}
-
-
-
 	}
 
 
@@ -200,8 +224,6 @@
 		pointsJoueur();
 
 		gagnerPartieOuPerdu();
-		console.log("X : " + dragon.rectangleDuDragon().x);
-		console.log("Y :" + dragon.rectangleDuDragon().y);
 
 
 

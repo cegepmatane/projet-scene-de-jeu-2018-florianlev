@@ -42,6 +42,8 @@
 							 HTML dans une même page. -->
 
 						<a id="bouton-jouer" href="#jeu">Jouer</a>
+
+						<input type="button" id="bouton-jouer" value="login"/>
 					</form>
 				</section>
 		</script>
@@ -84,13 +86,8 @@
 	<script src="jeu.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function () {
-	
-			
-			// Add event listeners
-			$("#bouton-jouer").click(onLoginBtClick);
+		document.getElementById("bouton-jouer").addEventListener("click",this.ouvrirConnexion);
 
-	    });
 	</script>
 
 

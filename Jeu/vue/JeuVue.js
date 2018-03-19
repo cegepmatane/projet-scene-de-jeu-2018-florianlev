@@ -10,7 +10,8 @@ JeuVue = function(){
 	this.afficher = function()
 	{
 		corps.innerHTML = JeuVue.pageJeuHTML;
-        nomJoueur = document.getElementById("nom-joueur");
+		nomJoueur = document.getElementById("nom-joueur");
+		console.log(nomJoueur);
         //nomJoueur.innerHTML = joueur.nom;
 	}
 	
