@@ -2,17 +2,7 @@
 
 function Connection() {
 
-/*    $(document).ready(function()
-{
-    tracer('jquery.ready()');
-	//var lacase = document.getElementById('case');
-	//alert(lacase);
-    $("#bouton-jouer").click(ouvrirSession);
 
-    
-});
-    
-*/  
 var serveur;
 var configuration = {};
 configuration.host = "127.0.0.1";

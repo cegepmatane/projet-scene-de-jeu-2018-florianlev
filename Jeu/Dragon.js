@@ -13,6 +13,7 @@ function Dragon(scene, couleur) {
 	var etatActuelX;
 	var etatActuelY;
 	this.animBas;
+	
 
 
 	var xCourant;

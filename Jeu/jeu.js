@@ -1,19 +1,15 @@
 (function () {
-
-
 	var accueilVue;
 	var jeuVue;
 
 	var gagnerVue;
 	var perduVue;
 
-
 	var dessin;
 	var scene;
 	var contexte;
 	var rectangle;
 	var serveur;
-
 
 	var dragon;
 	var balle;
@@ -27,7 +23,6 @@
 	var TOUCHE_HAUT = 87;
 	var TOUCHE_BAS = 83;
 	var TOUCHE_ESPACE = 32;
-
 	var NOMBRE_DE_PAS = 500;
 
 	var dejaTouchee = false;
@@ -70,7 +65,12 @@
 		serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
 		serveur.addEventListener(SFS2X.SFSEvent.LOGIN, executerApresOuvertureSession, this);
 		serveur.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, executerApresEntreeSalon, this);
+		serveur.addEventListener(SFS2X.SFSEvent.USER_ENTER_ROOM, onUserEnterRoom, this);
+		//serveur.addEventListener(SFS2X.SFSEvent.EXTENSION_RESPONSE, onExtensionResponse, this);
+		
+		serveur.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, executerApresVariableDeSalon, this);
 
+		
 
 	}
 
@@ -85,7 +85,6 @@
 
 			var pseudo = $("#pseudo").val();
 
-			console.log(pseudo);
 			serveur.send(new SFS2X.Requests.System.LoginRequest(""));
 		}
 
@@ -106,10 +105,40 @@
 	function executerApresEntreeSalon(e) {
 		tracer('executerApresEntreeSalon()');
 		tracer('Entree dans le salon ' + e.room + ' reussie');
-		dragon = new Dragon(scene, EtatCouleur.orange);
+		envoyerTailleCanvasAuServeur();
+		J1 = new Dragon(scene, EtatCouleur.orange);
+	}
 
+	function onUserEnterRoom(event)
+	{
+		tracer('onUserEnterRoom()');
+		J2 = new Dragon(scene, EtatCouleur.orange);
+		
+	}
 
+	function executerApresVariableDeSalon(e)
+	{
+		var changedVars = e.changedVars;
+		var room = e.room;
+	
+	// Check if the "gameStarted" variable was changed
+	
+		tracer('salutation == ' + e.room.getVariable('width').value, true);
+		
+	
+	}
 
+	function envoyerTailleCanvasAuServeur()
+	{
+		tracer("envoyerTailleCanvasAuServeur()");
+		var listeVariables = [];
+
+		listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('width', dessin.width));
+		listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('height', dessin.height));
+
+		estEnvoyee = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listeVariables));
+		//tracer('la nouvelle valeur est envoyee ' + estEnvoyee);
+		
 	}
 
 	//connexion a la room
@@ -124,6 +153,12 @@
 		serveur.send(new SFS2X.Requests.System.JoinRoomRequest(configuration.room));
 	}
 
+	function envoyerPositionBalleX()
+	{
+		tracer("envoyerPositionBalleX()");
+		serveur.send(new SFS2X.Requests.System.ExtensionRequest("PositionXBalle",{}));
+	}
+
 	//Methode privée
 
 	function tracer(message, alerte) {
@@ -136,23 +171,31 @@
 		//serveur.ouvrirSession(accueilVue.getPseudo());
 
 		dessin = document.getElementById("dessin");
+		
 		scene = new createjs.Stage(dessin);
 		arrierePlan = new ArrierePlan(scene);
-		//dragon = new Dragon(scene, EtatCouleur.orange);
+		dragon = new Dragon(scene, EtatCouleur.orange);
 		ennemi = new Ennemi(scene);
 		balle = new Balle(scene, dessin);
+		
+		
+
+
 		intervale = setInterval(
 
 			function () {
 
 				//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 				try {
-					if (dragon.estCharge && ennemi.estCharge) {
+					if (dragon.estCharge && ennemi.estCharge && J1.estCharge && J2.estCharge) {
 						clearInterval(intervale);
 
 						arrierePlan.afficher();
 						dragon.afficher();
 						ennemi.afficher();
+
+						J1.afficher();
+						//J2.afficher();
 						balle.afficher();
 
 						document.onkeydown = gererToucheEnfoncee;
@@ -163,16 +206,12 @@
 						createjs.Ticker.framerate = 90;
 						createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
 					}
-
-
 				}
 				catch(err){
-					console.log("Joueur pas encore charger !");
+					console.log("Veuillez attendre tous les joueurs!");
 
 				}
 			}, 1);
-
-
 	}
 
 	function interpreterEvenementLocation(evenement) {
@@ -184,6 +223,7 @@
 		else if (intructionNavigation.match(/^#jeu$/)) {
 			jeuVue.afficher();
 			commencerAJouer();
+			
 		}
 	}
 
@@ -216,9 +256,11 @@
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		arrierePlan.rafraichirAnimation(evenement);
 		dragon.appliquerVitesse(vitesseParSeconde);
+
+
 		balle.deplacementBalle();
 		rectangleDuDragon = dragon.rectangleDuDragon();
-
+		
 
 		enCollision();
 		pointsJoueur();
@@ -258,9 +300,9 @@
 
 		switch (evenement.keyCode) {
 			case TOUCHE_GAUCHE:
+
+			// ici charger  valeur event serveur 
 				dragon.deplacerVersLaGauche();
-
-
 				break;
 			case TOUCHE_DROITE:
 
