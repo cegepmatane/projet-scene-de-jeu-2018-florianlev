@@ -1,12 +1,16 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.smartfoxserver.v2.core.SFSEventParam;
 import com.smartfoxserver.v2.core.SFSEventType;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
+import com.smartfoxserver.v2.entities.variables.RoomVariable;
+import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.extensions.SFSExtension;
 
 public class QuidditchExtension extends SFSExtension{
@@ -54,39 +58,42 @@ public class QuidditchExtension extends SFSExtension{
 		return jeuLance;
 	}
 
-	public void demarerJeu(Room salon) {
+	public void demarerJeu(User user, Room salon) {
 
+		this.trace("QuidditchExtension.demarerJeu(User user, Room salon)");
 		if(jeuLance)
 			throw new IllegalStateException("Le jeu est lancée");
 			
 		
-		
 		jeuLance = true;
+
+		List<RoomVariable> listeVariables = new ArrayList<RoomVariable>();
+		RoomVariable variableSalon = new SFSRoomVariable("estCommencer", jeuLance);
+
+		listeVariables.add(variableSalon);
+		getApi().setRoomVariables(user, salon, listeVariables);
+		
+		//List<User> utilisateurs = salon.getUserList();
 		
 		
-		List<User> utilisateurs = salon.getUserList();
-		
-		
-		for(User utilisateur : utilisateurs)
+		/*for(User utilisateur : utilisateurs)
 		{
 			if(utilisateur != null)
 			{
 				this.trace("utilisateur : " + utilisateur.getName());
 
 			}
-		}
+		}*/
 		
 		
-		User joueur1 = salon.getUserById(0);
-		User joueur2 = salon.getUserById(1);
+		//User joueur1 = salon.getUserById(0);
+		//User joueur2 = salon.getUserById(1);
 		
-		ISFSObject joueurObj = new SFSObject();
-		joueurObj.putUtfString("p1n", joueur1.getName());
-		joueurObj.putUtfString("p2n", joueur2.getName());
+		//ISFSObject joueurObj = new SFSObject();
+		//joueurObj.putUtfString("p1n", joueur1.getName());
+		//joueurObj.putUtfString("p2n", joueur2.getName());
 		
-		send("start", joueurObj, getParentRoom().getUserList());
-		
-		
+		//send("start", joueurObj, getParentRoom().getUserList());
 		
 		
 		/*timer.scheduleAtFixedRate(new TimerTask()

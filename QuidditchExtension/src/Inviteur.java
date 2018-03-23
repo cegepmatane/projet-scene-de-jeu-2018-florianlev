@@ -34,7 +34,7 @@ public class Inviteur extends BaseServerEventHandler
 		{
 			this.trace("Demarrage du jeu");
 
-			jeuExtension.demarerJeu(salon);
+			jeuExtension.demarerJeu(utilisateur, salon );
 		}
 		else
 		{
