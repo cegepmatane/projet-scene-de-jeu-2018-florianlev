@@ -124,12 +124,21 @@ function Balle(stage, canvas) {
 		}
 	}
 
-	this.setDeplacementBalleX = function(x)
+	this.getPositionBalleX = function()
+	{
+		return dessin.x;
+	}
+	this.getPositionBalleY = function()
+	{
+		return dessin.y;
+	}
+
+	this.setPositionBalleX = function(x)
 	{
 		dessin.x = x;
 	}	
 
-	this.setDeplacementBalleY = function(y)	
+	this.setPositionBalleY = function(y)	
 	{
 		dessin.y = y;
 	}
