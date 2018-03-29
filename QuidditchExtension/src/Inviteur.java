@@ -29,7 +29,6 @@ public class Inviteur extends BaseServerEventHandler
 		List<RoomVariable> listeVariables = new ArrayList<RoomVariable>();
 		listeVariables.add(variableSalon);
 		getApi().setRoomVariables(utilisateur, salon, listeVariables);
-		
 		if(nombreJoueur == 2)
 		{
 			this.trace("Demarrage du jeu");

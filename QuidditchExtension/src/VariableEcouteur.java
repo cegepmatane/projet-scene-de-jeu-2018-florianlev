@@ -19,11 +19,18 @@ public class VariableEcouteur extends BaseServerEventHandler {
 	private ISFSApi api;
 	private SFSRoom salon = null;
 	private SFSUser utilisateur = null;
-	public Integer posBalleX;
-	public Integer posBalleY;
-	private Balle balle;
-	public static int widthCanvas;
-	public static int heightCanvas;
+	public int posBalleX;
+	public int posBalleY;
+	public QuidditchExtension jeuExtension;
+	
+	
+
+	
+	
+	public int widthCanvas;
+	public int heightCanvas;
+	
+	
 	
 
 	@SuppressWarnings("unchecked")
@@ -31,7 +38,10 @@ public class VariableEcouteur extends BaseServerEventHandler {
 
 	public void handleServerEvent(ISFSEvent evenement) throws SFSException {
 		
-		balle = new Balle();
+		jeuExtension = (QuidditchExtension) getParentExtension();
+
+		
+		//balle = new Balle();
 		//this.trace("VariableEcouteur.handleServerEvent()");
 		SmartFoxServer serveur = SmartFoxServer.getInstance();
 		this.api = serveur.getAPIManager().getSFSApi();
@@ -45,14 +55,7 @@ public class VariableEcouteur extends BaseServerEventHandler {
 		//enregistrerVariablesCanvas((List<RoomVariable>)evenement.getParameter(SFSEventParam.VARIABLES));
 		enregistrerVariablePositionBalle((List<RoomVariable>)evenement.getParameter(SFSEventParam.VARIABLES));
 		
-		try {
-			
-			balle.deplacementBalle(this.posBalleX, this.posBalleY, this.widthCanvas, this.heightCanvas);
-
-		}catch(Exception e)
-		{
-			this.trace("Attente position balle");
-		}
+	
 
 	}
 
@@ -60,31 +63,53 @@ public class VariableEcouteur extends BaseServerEventHandler {
 	private void enregistrerVariablePositionBalle(List<RoomVariable> listeVariables)
 	{
 		Iterator<RoomVariable>visiteur = listeVariables.iterator();
-		
+		String action = "";
+		int widthCanvasTemporaire = 0;
+		int heightCanvasTemporaire = 0;
+		int positionBalleXTemporaire = 0;
+		int positionBalleYTemporaire = 0;
 		while(visiteur.hasNext())
 		{
 			RoomVariable variable = visiteur.next();
 			if(variable != null)
 			{
-				if(variable.getName().compareTo("width") == 0)
+				
+				if(variable.getName().compareTo("action") == 0 )
 				{
-					this.widthCanvas = variable.getIntValue();
+					action = variable.getStringValue();
+					trace("action : " + action);
 				}
+				
+				if(variable.getName().compareTo("width") == 0 )
+				{
+					widthCanvasTemporaire = variable.getIntValue();
+				
+						
+				}
+				
 				if(variable.getName().compareTo("height") == 0)
 				{
-					this.heightCanvas = variable.getIntValue();
+					heightCanvasTemporaire = variable.getIntValue();
 				} 
+		
 				
-				if(variable.getName().compareTo("posBalleX") == 0)
+				
+				if(variable.getName().compareTo("positionXBalle") == 0)
 				{
-					this.posBalleX = variable.getIntValue();
+					positionBalleXTemporaire = variable.getIntValue();
 					
 					
 				}
-				if(variable.getName().compareTo("posBalleY") == 0)
+				if(variable.getName().compareTo("positionYBalle") == 0)
 				{
-					this.posBalleY = variable.getIntValue();
+					positionBalleYTemporaire = variable.getIntValue();
+
 				}
+				//trace("width :" + this.widthCanvas);
+				//trace("height :" + this.heightCanvas);
+				
+				//trace("jeuExtension = " + jeuExtension.toString());
+				//trace("balle = " + jeuExtension.balle.toString());
 				
 			
 				/*this.trace("DX" + balle.getDx());
@@ -92,7 +117,23 @@ public class VariableEcouteur extends BaseServerEventHandler {
 				
 				
 			}
+			
 		}
+		
+		if(action.compareTo("envoyerPositionBalle") == 0)
+		{
+			trace("if envoyerPositionBalle");
+			this.posBalleX = positionBalleXTemporaire;
+			this.posBalleY = positionBalleYTemporaire;
+			jeuExtension.balle.deplacementBalle(this.posBalleX, this.posBalleY);
+		}
+		else if (action.compareTo("envoyerTailleCanvas") == 0)
+		{
+			trace("if envoyerTailleCanvas");
+			this.widthCanvas = widthCanvasTemporaire;
+			this.heightCanvas = heightCanvasTemporaire;
+		}
+		
 	}
 	
 	

@@ -111,12 +111,14 @@ function Balle(stage, canvas) {
 	this.deplacementBalle = function () {
 
 		//console.log(etatCourant);
-		if (etatCourant == EtatBalle.estLancer) {
+		if (etatCourant == EtatBalle.estLancer) {	
 
-			if (dessin.x + dx > canvas.width || dessin.x + dx < 0) // Dépassement à droite ou à gauche
-				dx = - dx;
-			if (dessin.y + dy > canvas.height || dessin.y + dy < 0) // Dépassement en bas ou en haut
-				dy = - dy;
+			//if (dessin.x + dx > canvas.width || dessin.x + dx < 0) // Dépassement à droite ou à gauche
+				//dx = - dx;
+				//console.log("dx" + dx);
+			//if (dessin.y + dy > canvas.height || dessin.y + dy < 0) // Dépassement en bas ou en haut
+				//dy = - dy;
+				//console.log("dy" + dy);
 
 			dessin.x = dessin.x + dx; // On déplace la balle
 			dessin.y = dessin.y + dy;
@@ -131,6 +133,15 @@ function Balle(stage, canvas) {
 	this.getPositionBalleY = function()
 	{
 		return dessin.y;
+	}
+
+	this.setDiagonaleBalleX = function(dX)
+	{
+		dx = dX;
+	}
+	this.setDiagonaleBalleY = function(dY)
+	{
+		dx = dY;
 	}
 
 	this.setPositionBalleX = function(x)

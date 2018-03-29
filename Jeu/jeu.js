@@ -12,6 +12,10 @@
 	var serveur;
 	var connection;
 
+
+	var J1;
+	var J2;
+	var estJoueurMaitre;
 	var dragon;
 	var balle;
 	var balleEnCollisionAvecDragon = false;
@@ -46,11 +50,19 @@
 		//serveur = new Connection();
 
 		//Initialisation des vues
-		connection = new Connection(recevoirConfirmationJoueurPret);
+		connection = new Connection(recevoirConfirmationJoueurPret,
+									recevoirVariableCommencerJouer, 
+									recevoirIdJoueur,
+									recevoirDiagonaleBalleX,
+									recevoirDiagonaleBalleY,
+									recevoirPositionBalleX,
+									recevoirPositionBalleY);
 		jeuVue = new JeuVue();
 		accueilVue = new AccueilVue();
 		gagnerVue = new GagnerVue();
 		perduVue = new PerduVue();
+
+		estJoueurMaitre = false;
 
 
 
@@ -74,6 +86,37 @@
 
 	}
 
+	function recevoirIdJoueur(id)
+	{
+
+		if (id == 0)
+		{
+			estJoueurMaitre = true;
+			J1 = new Dragon(scene, EtatCouleur.orange);
+		}
+		else if (id == 1)
+		{
+			J2 = new Dragon(scene, EtatCouleur.orange);
+		}
+	}
+	function recevoirDiagonaleBalleX(dX)
+	{
+		balle.setDiagonaleBalleX(dX);
+	}
+
+	function recevoirDiagonaleBalleY(dY)
+	{
+		balle.setDiagonaleBalleY(dY);
+	}
+
+	function recevoirPositionBalleX(x)
+	{
+		console.log("x : " +  x);
+	}
+	function recevoirPositionBalleY(y)
+	{
+		console.log("y : " +  y);
+	}
 
 	function recevoirConfirmationJoueurPret() {
 		console.log("recevoirConfirmationJoueurPret()");
@@ -107,13 +150,6 @@
 	}
  */
 
-	/* 
-		function entrerSalon() {
-			tracer("entrerSalon()");
-			serveur.send(new SFS2X.Requests.System.JoinRoomRequest(configuration.room));
-		} */
-
-
 	//Methode privée
 
 	function tracer(message, alerte) {
@@ -123,7 +159,17 @@
 
 	function envoyerPositionBalle()
 	{
-		connection.envoyerPositionBalle(balle.getPositionBalleX(),balle.getPositionBalleY());
+		if(estJoueurMaitre)
+		{
+			console.log("estJoueurMaitre == " + estJoueurMaitre);
+			connection.envoyerPositionBalle(balle.getPositionBalleX(),balle.getPositionBalleY());
+		}
+	}
+
+	function recevoirVariableCommencerJouer(varBool)
+	{
+		console.log("recevoirVariableCommencerJouer()");
+		console.log("estCommencer == " + varBool);
 	}
 
 
@@ -139,13 +185,13 @@
 		ennemi = new Ennemi(scene);
 		balle = new Balle(scene, dessin);
 		
-		setInterval(envoyerPositionBalle,100);
+		setInterval(envoyerPositionBalle,500);
 
 
 
 
 		intervale = setInterval(
-
+								
 			function () {
 
 				//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
@@ -232,9 +278,6 @@
 		pointsJoueur();
 
 		gagnerPartieOuPerdu();
-
-
-
 
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enlibertee && balleEnCollisionAvecEnnemi) {
 

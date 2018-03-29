@@ -1,6 +1,12 @@
 
 
-function Connection(quandJoueurEstPret) {
+function Connection(quandJoueurEstPret, 
+                    recupererVariableCommencer, 
+                    recupererIdJoueur, 
+                    recupererDiagonaleBalleX,
+                    recupererDiagonaleBalleY,
+                    recupererPositionBalleX,
+                    recupererPositionBalleY) {
 
 
 this.serveur;
@@ -23,9 +29,8 @@ function initialiser()
     this.serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
     this.serveur.addEventListener(SFS2X.SFSEvent.LOGIN, executerApresOuvertureSession, this);
     this.serveur.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, executerApresEntreeSalon, this);
-
-    
-    //serveur.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, execxuterApresVariableDeSalon, this);
+    this.serveur.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, executerApresVariableDeSalon, this);
+    this.serveur.addEventListener(SFS2X.SFSEvent.USER_ENTER_ROOM, executerApresEntrerUtilisateur, this)
 
 }
 
@@ -41,6 +46,8 @@ function executerApresOuvertureContactServeur(e) {
         var pseudo = $("#pseudo").val();
 
         this.serveur.send(new SFS2X.Requests.System.LoginRequest(""));
+
+        
     }
 
     else {
@@ -50,6 +57,7 @@ function executerApresOuvertureContactServeur(e) {
 }
 
 
+
 this.ouvrirContactServeur = function()
 {
     tracer("ouvrirConnection");
@@ -57,16 +65,11 @@ this.ouvrirContactServeur = function()
     
 }
 
-function ouvrirSession()
-{
-    tracer("ouvrirSession()");
-    this.serveur.send(new SFS2X.Requests.System.LoginRequest("Nadine"));
-}
-
 function executerApresOuvertureSession(e)
 {
     tracer("executerApresOuvertureSession()");
-    tracer("l'usager " + e.user.name + " est dans la zone " + e.zone);
+    tracer("l'usager " + e.user.id + " est dans la zone " + e.zone);
+    recupererIdJoueur(e.user.id);
     entrerSalon();
 }
 
@@ -89,6 +92,7 @@ this.envoyerTailleCanvasAuServeur = function(width,height) {
 
     tracer("envoyerTailleCanvasAuServeur()");
     var listeVariables = [];
+    listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('action', "envoyerTailleCanvas"));
 
     listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('width', width));
     listeVariables.push(new SFS2X.Entities.Variables.SFSRoomVariable('height', height));
@@ -101,34 +105,63 @@ this.envoyerTailleCanvasAuServeur = function(width,height) {
 
 
 this.envoyerPositionBalle = function(positionBalleX, positionBalleY) {
-    tracer("envoyerPositionBalle");
+    //tracer("envoyerPositionBalle");
     var listePositions = [];
+    console.log("X " + positionBalleX);
+    console.log("Y " + positionBalleY);
+    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('action', "envoyerPositionBalle"));
 
-    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('posBalleX', positionBalleX ));
-    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('posBalleY', positionBalleY));
+    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', positionBalleX ));
+    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYBalle', positionBalleY));
 
     estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositions));
-    console.log("test");
 
 }
 
 function executerApresVariableDeSalon(e)
 {
-    tracer('executerApresVariableDeSalon()');
-    tracer('variables recues ' + e.changedVars);
-    /*if(e.changedVars.indexOf('salutation') != -1)
+    //tracer('variables recues ' + e.changedVars);
+    if(e.changedVars.indexOf('estCommencer') != -1)
     {
-        tracer('salutation == ' + e.room.getVariable('positionXBalle').value, true);
+        //tracer('EstCoemmencer == ' + e.room.getVariable('estCommencer').value, false);
+        estCommencer = e.room.getVariable('estCommencer').value;
+        recupererVariableCommencer(estCommencer);
     }
-    */
+
+    if(e.changedVars.indexOf('diagonaleX') != -1)
+    {
+        recupererDiagonaleBalleX(e.room.getVariable('diagonaleX').value);
+    }
+
+    if(e.changedVars.indexOf('diagonaleY') != -1)
+    {
+        recupererDiagonaleBalleY(e.room.getVariable('diagonaleY').value);
+    }
+
+    if(e.changedVars.indexOf('positionX') != -1)
+    {
+        recupererPositionBalleX(e.room.getVariable('positionX').value);
+    }
+
+    if(e.changedVars.indexOf('positionY') != -1)
+    {
+        recupererPositionBalleY(e.room.getVariable('positionY').value);
+    }
+
+    
 }
 
-function onUserEnterRoom(event)
+function executerApresEntrerUtilisateur(e)
+{
+    console.log(e.user.name);       
+}
+
+/*function onUserEnterRoom(event)
 	{
 		tracer('onUserEnterRoom()');
 		//J2 = new Dragon(scene, EtatCouleur.orange);
 		
-	}
+	}*/
 
 function tracer(message, alerte)
 {
