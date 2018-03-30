@@ -51,7 +51,8 @@ public class Balle {
 		}
 		setX(x);
 		setY(y);
-		
+		jeuExtension.trace("x " + x);
+		jeuExtension.trace("y " + y);
 	}
 	
 

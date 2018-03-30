@@ -94,9 +94,9 @@
 
 	function recevoirDiagonaleBalleY(dY)
 	{
-		console.log("dY" + dY);
+		//console.log("dY" + dY);
 
-		//balle.setDiagonaleBalleY(dY);
+		balle.setDiagonaleBalleY(dY);
 	}
 
 	function recevoirPositionBalleX(x)
@@ -108,7 +108,7 @@
 	function recevoirPositionBalleY(y)
 	{
 		//console.log("y : " +  y);
-		//balle.setPositionBalleY(y);
+		balle.setPositionBalleY(y);
 	}
 
 	function recevoirConfirmationJoueurPret() {
@@ -170,10 +170,10 @@
 		scene = new createjs.Stage(dessin);
 		arrierePlan = new ArrierePlan(scene);
 		dragon = new Dragon(scene, EtatCouleur.orange);
-		ennemi = new Ennemi(scene);
+		//ennemi = new Ennemi(scene);
 		balle = new Balle(scene, dessin);
 		
-		setInterval(deplacementDeLaBalle,40);
+		setInterval(deplacementDeLaBalle,10);
 
 
 
@@ -184,12 +184,12 @@
 
 				//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 				try {
-					if (dragon.estCharge && ennemi.estCharge) {
+					if (dragon.estCharge ) {
 
 						clearInterval(intervale);
 						arrierePlan.afficher();
 						dragon.afficher();
-						ennemi.afficher();
+						//ennemi.afficher();
 						//balle.deplacementBalle();
 
 
@@ -230,7 +230,7 @@
 	function enCollision() {
 
 		rectangleDeBalle = balle.rectangleBalle();
-		rectangleEnnemi = ennemi.rectangleEnnemi;
+		//rectangleEnnemi = ennemi.rectangleEnnemi;
 		//verif collision entre balle et joueur
 
 		if (dragon.rectangleDuDragon().intersects(balle.rectangleBalle())) {
@@ -238,15 +238,15 @@
 
 		}
 
-		else if (ennemi.representerRectangle().intersects(balle.rectangleBalle())) {
+		/*else if (ennemi.representerRectangle().intersects(balle.rectangleBalle())) {
 			//setTimeout( function(){
 
 			balleEnCollisionAvecEnnemi = true;
 			//},300);
-		}
+		}*/
 		else {
 			balleEnCollisionAvecDragon = false;
-			balleEnCollisionAvecEnnemi = false;
+			//balleEnCollisionAvecEnnemi = false;
 		}
 	}
 
@@ -268,13 +268,13 @@
 
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enlibertee && balleEnCollisionAvecEnnemi) {
 
-			balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteEnnemi;
+			//balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteEnnemi;
 
 			balle.attraper();
 			//balle.estAttrapable = false;
 
 		}
-		ennemi.poursuivreJoueur(rectangleDuDragon.x, rectangleDuDragon.y, balle.etatCaptivite, balle.EtatEnCaptivite.enlibertee, balle.EtatEnCaptivite.enCaptiviteEnnemi, balle.rectangleBalle().x, balle.rectangleBalle().y);
+		//ennemi.poursuivreJoueur(rectangleDuDragon.x, rectangleDuDragon.y, balle.etatCaptivite, balle.EtatEnCaptivite.enlibertee, balle.EtatEnCaptivite.enCaptiviteEnnemi, balle.rectangleBalle().x, balle.rectangleBalle().y);
 
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteEnnemi) {
 			console.log("test");
@@ -286,7 +286,7 @@
 			//balle.estAttrapable = true;
 		}
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie) {
-			ennemi.fuir();
+			//ennemi.fuir();
 		}
 		scene.update(evenement);
 	}
