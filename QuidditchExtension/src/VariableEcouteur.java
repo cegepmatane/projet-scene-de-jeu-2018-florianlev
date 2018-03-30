@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import com.smartfoxserver.v2.entities.SFSUser;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
+import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
 import com.smartfoxserver.v2.exceptions.SFSException;
 
 import com.smartfoxserver.v2.extensions.BaseServerEventHandler;
@@ -103,19 +105,9 @@ public class VariableEcouteur extends BaseServerEventHandler {
 				if(variable.getName().compareTo("positionYBalle") == 0)
 				{
 					positionBalleYTemporaire = variable.getIntValue();
-
+					
 				}
-				//trace("width :" + this.widthCanvas);
-				//trace("height :" + this.heightCanvas);
-				
-				//trace("jeuExtension = " + jeuExtension.toString());
-				//trace("balle = " + jeuExtension.balle.toString());
-				
-			
-				/*this.trace("DX" + balle.getDx());
-				this.trace("DY" +balle.getDy());*/
-				
-				
+
 			}
 			
 		}
@@ -126,7 +118,22 @@ public class VariableEcouteur extends BaseServerEventHandler {
 			this.posBalleX = positionBalleXTemporaire;
 			this.posBalleY = positionBalleYTemporaire;
 			jeuExtension.balle.deplacementBalle(this.posBalleX, this.posBalleY);
+			
+			List<RoomVariable> listeDiagonalesPosition = new ArrayList<RoomVariable>();
+			
+			RoomVariable diagonaleX = new SFSRoomVariable("diagonaleX", jeuExtension.balle.getDx());
+			RoomVariable diagonaleY = new SFSRoomVariable("diagonaleY", jeuExtension.balle.getDy());
+			RoomVariable positionX = new SFSRoomVariable("positionX", jeuExtension.balle.getX());
+			RoomVariable positionY = new SFSRoomVariable("positionY", jeuExtension.balle.getY());
+			listeDiagonalesPosition.add(diagonaleY);
+			listeDiagonalesPosition.add(diagonaleX);
+			listeDiagonalesPosition.add(positionX);
+			listeDiagonalesPosition.add(positionY);
+			//trace(jeuExtension.balle.getDx());
+			//trace(jeuExtension.balle.getDy());	
+			getApi().setRoomVariables(null, jeuExtension.getParentZone().getRoomByName("RoomDragon"), listeDiagonalesPosition);		
 		}
+		
 		else if (action.compareTo("envoyerTailleCanvas") == 0)
 		{
 			trace("if envoyerTailleCanvas");

@@ -71,19 +71,6 @@
 		document.getElementById("bouton-jouer").addEventListener("click", connection.ouvrirContactServeur);
 		window.addEventListener("hashchange", interpreterEvenementLocation);
 
-
-		//Ajout des evenement ecouteurs
-		/* serveur = new SFS2X.SmartFox(configuration);
-		serveur.addEventListener(SFS2X.SFSEvent.CONNECTION, executerApresOuvertureContactServeur, this);
-		serveur.addEventListener(SFS2X.SFSEvent.LOGIN, executerApresOuvertureSession, this);
-		serveur.addEventListener(SFS2X.SFSEvent.ROOM_JOIN, executerApresEntreeSalon, this);
-		serveur.addEventListener(SFS2X.SFSEvent.USER_ENTER_ROOM, onUserEnterRoom, this); */
-
-		//serveur.addEventListener(SFS2X.SFSEvent.EXTENSION_RESPONSE, onExtensionResponse, this);
-
-		//serveur.addEventListener(SFS2X.SFSEvent.ROOM_VARIABLES_UPDATE, executerApresVariableDeSalon, this);
-		//serveur.addEventListener(SFS2X.SFSEvent.DEPLACEMENT_BALLE, recevoirDeplacementBalle, this);
-
 	}
 
 	function recevoirIdJoueur(id)
@@ -101,21 +88,27 @@
 	}
 	function recevoirDiagonaleBalleX(dX)
 	{
+		//console.log("recevoirDiagonaleBalleX()");
 		balle.setDiagonaleBalleX(dX);
 	}
 
 	function recevoirDiagonaleBalleY(dY)
 	{
-		balle.setDiagonaleBalleY(dY);
+		console.log("dY" + dY);
+
+		//balle.setDiagonaleBalleY(dY);
 	}
 
 	function recevoirPositionBalleX(x)
 	{
-		console.log("x : " +  x);
+		//console.log("x : " +  x);
+		balle.setPositionBalleX(x);
 	}
+
 	function recevoirPositionBalleY(y)
 	{
-		console.log("y : " +  y);
+		//console.log("y : " +  y);
+		//balle.setPositionBalleY(y);
 	}
 
 	function recevoirConfirmationJoueurPret() {
@@ -137,18 +130,6 @@
 
 
 
-	/* function envoyerPositionBalle() {
-		tracer("envoyerPositionBalle");
-		var listePositions = [];
-
-		listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('posBalleX', balle.getPositionBalleX()));
-		listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('posBalleY', balle.getPositionBalleY()));
-
-		estEnvoyeePosition = connection.serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositions));
-
-
-	}
- */
 
 	//Methode privée
 
@@ -157,13 +138,20 @@
 		if (alerte) alert(message);
 	}
 
-	function envoyerPositionBalle()
+	function deplacementDeLaBalle()
 	{
 		if(estJoueurMaitre)
 		{
 			console.log("estJoueurMaitre == " + estJoueurMaitre);
+			
+			balle.deplacementBalle();
+
+
 			connection.envoyerPositionBalle(balle.getPositionBalleX(),balle.getPositionBalleY());
 		}
+		balle.afficher();
+
+		
 	}
 
 	function recevoirVariableCommencerJouer(varBool)
@@ -185,7 +173,7 @@
 		ennemi = new Ennemi(scene);
 		balle = new Balle(scene, dessin);
 		
-		setInterval(envoyerPositionBalle,500);
+		setInterval(deplacementDeLaBalle,40);
 
 
 
@@ -202,8 +190,8 @@
 						arrierePlan.afficher();
 						dragon.afficher();
 						ennemi.afficher();
+						//balle.deplacementBalle();
 
-						balle.afficher();
 
 						document.onkeydown = gererToucheEnfoncee;
 						document.onkeyup = gererToucheLevee;
@@ -218,7 +206,7 @@
 					console.log("Veuillez attendre tous les joueurs!");
 
 				}
-			}, 1);
+			}, 500);
 	}
 
 	function estConnecter() {
@@ -270,7 +258,6 @@
 
 
 		//envoyerPositionBalle();
-		balle.deplacementBalle();
 		rectangleDuDragon = dragon.rectangleDuDragon();
 
 

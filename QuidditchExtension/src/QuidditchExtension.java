@@ -21,13 +21,13 @@ import com.smartfoxserver.v2.extensions.SFSExtension;
 
 public class QuidditchExtension extends SFSExtension{
 	
-	 @SuppressWarnings("unused")
-	 
+	
+		 
 	 public QuidditchExtension jeuExtension;
 	 public Balle balle;
 
 	 
-	private class TaskRunner implements Runnable
+	/*private class TaskRunner implements Runnable
 	    {
 	        private int runningCycles = 0;
 	  
@@ -48,26 +48,28 @@ public class QuidditchExtension extends SFSExtension{
 	            }
 	        }
 		
-	    }
+	    }*/
 	 
 	 
-	ScheduledFuture<?> taskHandle;
+	//ScheduledFuture<?> taskHandle;
 	private volatile boolean jeuLance;
 
 	
 	int compteur;
 	
 	
-	public void executerTimer()
+	/*public void executerTimer()
 	{
 		List<RoomVariable> listeDiagonalesPosition = new ArrayList<RoomVariable>();
-		trace(balle.getDx());
+	
 		RoomVariable diagonaleX = new SFSRoomVariable("diagonaleX", balle.getDx());
 		RoomVariable diagonaleY = new SFSRoomVariable("diagonaleY", balle.getDy());
 		RoomVariable positionX = new SFSRoomVariable("positionX", balle.getX());
 		RoomVariable positionY = new SFSRoomVariable("positionY", balle.getY());
 		//trace("positionX " + balle.getX());
 		//trace("positionY " + balle.getY());
+		//trace("Dx " + balle.getDx());
+		//trace("Dy " +balle.getDy());
 		
 		listeDiagonalesPosition.add(diagonaleY);
 		listeDiagonalesPosition.add(diagonaleX);
@@ -76,7 +78,7 @@ public class QuidditchExtension extends SFSExtension{
 		
 		
 		getApi().setRoomVariables(null, this.getParentZone().getRoomByName("RoomDragon"), listeDiagonalesPosition);
-	}
+	}*/
 	
     public void init()
     {
@@ -124,9 +126,9 @@ public class QuidditchExtension extends SFSExtension{
 		listeVariables.add(variableSalon);
 		getApi().setRoomVariables(user, salon, listeVariables);
 		
-		SmartFoxServer serveur =  SmartFoxServer.getInstance();
+		//SmartFoxServer serveur =  SmartFoxServer.getInstance();
 		
-		taskHandle = serveur.getTaskScheduler().scheduleAtFixedRate(new TaskRunner(), 0, 500, TimeUnit.MILLISECONDS);
+		//taskHandle = serveur.getTaskScheduler().scheduleAtFixedRate(new TaskRunner(), 0, 500, TimeUnit.MILLISECONDS);
 		
 		//List<User> utilisateurs = salon.getUserList();
 		
@@ -162,13 +164,13 @@ public class QuidditchExtension extends SFSExtension{
 		this.trace(listeMessages);
 	}
 	
-	public void destroy()
+	/*public void destroy()
     {
         super.destroy();
          
         if (taskHandle != null);
             taskHandle.cancel(true);
-    }
+    }*/
 	
 
 	

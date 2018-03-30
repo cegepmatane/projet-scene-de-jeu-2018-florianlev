@@ -107,8 +107,7 @@ this.envoyerTailleCanvasAuServeur = function(width,height) {
 this.envoyerPositionBalle = function(positionBalleX, positionBalleY) {
     //tracer("envoyerPositionBalle");
     var listePositions = [];
-    console.log("X " + positionBalleX);
-    console.log("Y " + positionBalleY);
+
     listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('action', "envoyerPositionBalle"));
 
     listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', positionBalleX ));
@@ -131,11 +130,13 @@ function executerApresVariableDeSalon(e)
     if(e.changedVars.indexOf('diagonaleX') != -1)
     {
         recupererDiagonaleBalleX(e.room.getVariable('diagonaleX').value);
+        //console.log(e.room.getVariable('diagonaleX').value);
     }
 
     if(e.changedVars.indexOf('diagonaleY') != -1)
     {
         recupererDiagonaleBalleY(e.room.getVariable('diagonaleY').value);
+        //console.log(e.room.getVariable('diagonaleY').value);
     }
 
     if(e.changedVars.indexOf('positionX') != -1)

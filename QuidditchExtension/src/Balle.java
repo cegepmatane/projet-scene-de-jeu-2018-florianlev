@@ -1,8 +1,13 @@
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import com.smartfoxserver.v2.SmartFoxServer;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.variables.RoomVariable;
+import com.smartfoxserver.v2.entities.variables.SFSRoomVariable;
+
 
 public class Balle {
 
@@ -10,10 +15,13 @@ public class Balle {
 	QuidditchExtension jeuExtension;
 	
 	
-	public int dx = 4;
-	public int dy = 2;
+	public int dy = 4;
+	public int dx = 2;
 	public int x;
+	
+
 	public int y;
+	
 	
 	public Balle(QuidditchExtension extension)
 	{
@@ -25,22 +33,28 @@ public class Balle {
 	{
 		Room salon = jeuExtension.getParentZone().getRoomByName("RoomDragon");
 		int largeur = salon.getVariable("width").getIntValue();
-		jeuExtension.trace("x : " + x);
-		jeuExtension.trace("y : " + y);
-		jeuExtension.trace("width" + largeur);
-		//jeuExtension.trace("height : " + height);
-		/*if(x + dx > width || x + dx < 0)
+		int hauteur = salon.getVariable("height").getIntValue();
+
+
+
+		if(x + dx > largeur || x + dx < 0)
 		{
-			jeuExtension.trace("x : " + x);
 			
-			dx = dx - dx;
+			dx =-  dx;
+			//jeuExtension.trace("dx " + dx);
 		}
-		if(y + dy > height || y + dy < 0 )
-			jeuExtension.trace("y : " + y);
+		else if(y + dy > hauteur || y + dy < 0 )
 		{
-			dy = dy - dy;
-		}*/
+			dy =- dy;
+			//jeuExtension.trace("dy " + dy);
+
+		}
+		setX(x);
+		setY(y);
+		
 	}
+	
+
 	
 	public int getX()
 	{
@@ -51,7 +65,15 @@ public class Balle {
 	{
 		return y;
 	}
+	public void setX(int x) {
+		this.x = x;
+	}
 
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	
 	public int getDx() {
 		return dx;
 	}
@@ -60,9 +82,4 @@ public class Balle {
 		return dy;
 	}
 	
-	
-	
-	
-
-
 }

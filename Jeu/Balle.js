@@ -6,13 +6,18 @@ function Balle(stage, canvas) {
 	dessin.y = 150;
 	dessin.height = 10;
 	dessin.width = 10;
+	var dx;
+
+	var positionBalleX;
+	var positionBalleY;
+	var dy = 2;
 
 
 
 	var dejaLance = false;
 
-	dy = 4;
-	dx = 2;
+	//dy = 4;
+	//dx = 2;
 
 	var couleurCourante;
 	this.estAttrapable = true;
@@ -115,24 +120,30 @@ function Balle(stage, canvas) {
 
 			//if (dessin.x + dx > canvas.width || dessin.x + dx < 0) // Dépassement à droite ou à gauche
 				//dx = - dx;
-				//console.log("dx" + dx);
-			//if (dessin.y + dy > canvas.height || dessin.y + dy < 0) // Dépassement en bas ou en haut
-				//dy = - dy;
-				//console.log("dy" + dy);
+			if (dessin.y + dy > canvas.height || dessin.y + dy < 0) // Dépassement en bas ou en haut
+				dy = - dy;
+			//console.log("dx : " + dx);
+			//console.log("dx :" + dx);
 
+			//console.log("dy : " + dy);
+			
 			dessin.x = dessin.x + dx; // On déplace la balle
 			dessin.y = dessin.y + dy;
+			positionBalleX = dessin.x;
+			//positionBalleY = dessin.y;
 
 		}
 	}
 
 	this.getPositionBalleX = function()
 	{
-		return dessin.x;
+		
+		return positionBalleX;
 	}
 	this.getPositionBalleY = function()
 	{
-		return dessin.y;
+		
+		return positionBalleY;
 	}
 
 	this.setDiagonaleBalleX = function(dX)
