@@ -27,58 +27,14 @@ public class QuidditchExtension extends SFSExtension{
 	 public Balle balle;
 
 	 
-	/*private class TaskRunner implements Runnable
-	    {
-	        private int runningCycles = 0;
-	  
-	        public void run()
-	        {
-	            try
-	            {
-	                runningCycles++;
-	                
-	                
-	                jeuExtension.executerTimer();
-	                
-	                //trace("Inside the running task. Cycle:  " + runningCycles);
-	            }
-	            catch (Exception e)
-	            {
-	                // Handle exceptions here
-	            }
-	        }
-		
-	    }*/
-	 
-	 
-	//ScheduledFuture<?> taskHandle;
+
 	private volatile boolean jeuLance;
 
 	
 	int compteur;
 	
 	
-	/*public void executerTimer()
-	{
-		List<RoomVariable> listeDiagonalesPosition = new ArrayList<RoomVariable>();
-	
-		RoomVariable diagonaleX = new SFSRoomVariable("diagonaleX", balle.getDx());
-		RoomVariable diagonaleY = new SFSRoomVariable("diagonaleY", balle.getDy());
-		RoomVariable positionX = new SFSRoomVariable("positionX", balle.getX());
-		RoomVariable positionY = new SFSRoomVariable("positionY", balle.getY());
-		//trace("positionX " + balle.getX());
-		//trace("positionY " + balle.getY());
-		//trace("Dx " + balle.getDx());
-		//trace("Dy " +balle.getDy());
-		
-		listeDiagonalesPosition.add(diagonaleY);
-		listeDiagonalesPosition.add(diagonaleX);
-		listeDiagonalesPosition.add(positionX);
-		listeDiagonalesPosition.add(positionY);
-		
-		
-		getApi().setRoomVariables(null, this.getParentZone().getRoomByName("RoomDragon"), listeDiagonalesPosition);
-	}*/
+
 	
     public void init()
     {
@@ -164,13 +120,7 @@ public class QuidditchExtension extends SFSExtension{
 		this.trace(listeMessages);
 	}
 	
-	/*public void destroy()
-    {
-        super.destroy();
-         
-        if (taskHandle != null);
-            taskHandle.cancel(true);
-    }*/
+	
 	
 
 	

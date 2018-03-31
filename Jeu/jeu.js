@@ -84,6 +84,7 @@
 		else if (id == 1)
 		{
 			J2 = new Dragon(scene, EtatCouleur.orange);
+
 		}
 	}
 	function recevoirDiagonaleBalleX(dX)
@@ -173,7 +174,7 @@
 		//ennemi = new Ennemi(scene);
 		balle = new Balle(scene, dessin);
 		
-		setInterval(deplacementDeLaBalle,10);
+		setInterval(deplacementDeLaBalle,25);
 
 
 
@@ -184,11 +185,12 @@
 
 				//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 				try {
-					if (dragon.estCharge ) {
-
+					if (dragon.estCharge) {
+					//if (dragon.estCharge ) {
 						clearInterval(intervale);
 						arrierePlan.afficher();
 						dragon.afficher();
+						//J1.afficher();
 						//ennemi.afficher();
 						//balle.deplacementBalle();
 

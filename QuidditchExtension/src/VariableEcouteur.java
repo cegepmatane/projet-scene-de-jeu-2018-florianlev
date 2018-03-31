@@ -21,16 +21,16 @@ public class VariableEcouteur extends BaseServerEventHandler {
 	private ISFSApi api;
 	private SFSRoom salon = null;
 	private SFSUser utilisateur = null;
-	public int posBalleX;
-	public int posBalleY;
+	public double posBalleX;
+	public double posBalleY;
 	public QuidditchExtension jeuExtension;
 	
 	
 
 	
 	
-	public int widthCanvas;
-	public int heightCanvas;
+	public double widthCanvas;
+	public double heightCanvas;
 	
 	
 	
@@ -66,10 +66,12 @@ public class VariableEcouteur extends BaseServerEventHandler {
 	{
 		Iterator<RoomVariable>visiteur = listeVariables.iterator();
 		String action = "";
-		int widthCanvasTemporaire = 0;
-		int heightCanvasTemporaire = 0;
-		int positionBalleXTemporaire = 0;
-		int positionBalleYTemporaire = 0;
+		double widthCanvasTemporaire = 0;
+		double heightCanvasTemporaire = 0;
+		int positionBalleXInt = 0;
+		int positionBalleYInt = 0;
+		double positionBalleXTemporaire = 0;
+		double positionBalleYTemporaire = 0;
 		while(visiteur.hasNext())
 		{
 			RoomVariable variable = visiteur.next();
@@ -85,26 +87,54 @@ public class VariableEcouteur extends BaseServerEventHandler {
 				if(variable.getName().compareTo("width") == 0 )
 				{
 					widthCanvasTemporaire = variable.getIntValue();
-				
-						
+					widthCanvasTemporaire = (double)widthCanvasTemporaire;
+
 				}
 				
 				if(variable.getName().compareTo("height") == 0)
 				{
 					heightCanvasTemporaire = variable.getIntValue();
+					heightCanvasTemporaire = (double)heightCanvasTemporaire;
 				} 
 		
 				
 				
 				if(variable.getName().compareTo("positionXBalle") == 0)
 				{
-					positionBalleXTemporaire = variable.getIntValue();
+					if(variable.getValue() instanceof Double)
+					{
+						trace("Double");
+						trace("X : " + variable.getValue());
+						positionBalleXTemporaire = variable.getDoubleValue();
+						
+					}
+					else if (variable.getValue() instanceof Integer) {
+						trace("Integer");
+						trace("X : " + variable.getValue());
+						positionBalleXTemporaire = variable.getIntValue();
+
+					}
 					
-					
+		
 				}
 				if(variable.getName().compareTo("positionYBalle") == 0)
 				{
-					positionBalleYTemporaire = variable.getIntValue();
+					if(variable.getValue() instanceof Double)
+					{
+						trace("Double");
+						trace("Y : " + variable.getValue());
+						positionBalleXTemporaire = variable.getDoubleValue();
+
+						
+					}
+					else if (variable.getValue() instanceof Integer) {
+						trace("Integer");
+						trace("Y : " + variable.getValue());
+						positionBalleXTemporaire = variable.getIntValue();
+
+					}
+					
+				
 					
 				}
 

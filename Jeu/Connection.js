@@ -106,15 +106,28 @@ this.envoyerTailleCanvasAuServeur = function(width,height) {
 
 this.envoyerPositionBalle = function(positionBalleX, positionBalleY) {
     //tracer("envoyerPositionBalle");
+
+
     var listePositions = [];
+    //console.log(isFloat(test));
+    testX = (positionBalleX).toFixed(10);
+    testY = (positionBalleY).toFixed(10);
+    //console.log(test2);
+    console.log(testX);
+    
+    balleX = parseFloat(testX);
+    balleY = parseFloat(testY);
 
     listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('action', "envoyerPositionBalle"));
-
-    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', positionBalleX ));
-    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYBalle', positionBalleY));
-
+    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', balleX));
+    listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYBalle', balleY));
+    console.log("apres " +listePositions);
+    
     estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositions));
 
+}
+function isFloat(n){
+    return Number(n) === n && n % 1 !== 0;
 }
 
 function executerApresVariableDeSalon(e)

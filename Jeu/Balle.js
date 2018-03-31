@@ -206,7 +206,7 @@ function Balle(stage, canvas) {
 			dy = dyTenu;
 			dejaLance = true;
 			if (this.etatCaptivite == this.EtatEnCaptivite.enCaptiviteAllie) {
-				createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 300);
+				createjs.Tween.get(dessin).to({ x: positionX, y: positionY }, 500);
 				this.etatCaptivite = this.EtatEnCaptivite.enCaptiviteAllie;
 			}
 
