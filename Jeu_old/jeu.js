@@ -59,17 +59,19 @@
 									recevoirPositionBalleX,
 									recevoirPositionBalleY);
 		jeuVue = new JeuVue();
+		attendreJoueur = new AttendreJoueur();
 		accueilVue = new AccueilVue();
 		gagnerVue = new GagnerVue();
 		perduVue = new PerduVue();
 
 		estJoueurMaitre = false;
-
-
 		pretACommencerPartie = false;
-		accueilVue.afficher();
 
-		document.getElementById("bouton-jouer").addEventListener("click", connection.ouvrirContactServeur);
+
+
+		accueilVue.afficher();
+		document.getElementById("bouton-Attendrejoueur").addEventListener("click", connection.ouvrirContactServeur);
+
 		window.addEventListener("hashchange", interpreterEvenementLocation);
 
 	}
@@ -115,7 +117,7 @@
 
 	function recevoirConfirmationJoueurPret() {
 		console.log("recevoirConfirmationJoueurPret()");
-		pretACommencerPartie = true;
+		commencerAJouer();
 
 	}
 
@@ -129,9 +131,6 @@
 		tracer("x :" + dep.x);
 		tracer("y :" + dep.y);
 	}
-
-
-
 
 	//Methode privée
 
@@ -147,20 +146,16 @@
 			console.log("estJoueurMaitre == " + estJoueurMaitre);
 			
 			balle.deplacementBalle();
-
-
 			connection.envoyerPositionBalle(balle.getPositionBalleX(),balle.getPositionBalleY());
 		}
 		balle.afficher();
-
-		
 	}
 
 	function recevoirVariableCommencerJouer(varBool)
 	{
-		console.log("recevoirVariableCommencerJouer()");
-		commencerAJouer();
-		pretACommencerPartie = true;
+		console.log("recevoirVariableCommencerJouer() ==" + varBool);
+
+			document.getElementById("toggle").style.display = "block";
 
 	}
 
@@ -173,14 +168,11 @@
 
 		scene = new createjs.Stage(dessin);
 		arrierePlan = new ArrierePlan(scene);
-		if(pretACommencerPartie){
-			document.getElementById("texteAttendre").style.display = "none";
-
-			dragon = new Dragon(scene, EtatCouleur.orange);
-			//ennemi = new Ennemi(scene);
-			balle = new Balle(scene, dessin);
+		dragon = new Dragon(scene, EtatCouleur.orange);
+		//ennemi = new Ennemi(scene);
+		balle = new Balle(scene, dessin);
 		
-			setInterval(deplacementDeLaBalle,25);
+		setInterval(deplacementDeLaBalle,25);
 
 
 
@@ -198,7 +190,7 @@
 						dragon.afficher();
 						//J1.afficher();
 						//ennemi.afficher();
-						//balle.deplacementBalle();
+						balle.deplacementBalle();
 
 
 						document.onkeydown = gererToucheEnfoncee;
@@ -215,8 +207,6 @@
 
 				}
 			}, 500);
-		}
-		
 	}
 
 	function estConnecter() {
@@ -229,10 +219,20 @@
 		if (!intructionNavigation || intructionNavigation.match(/^#$/) || intructionNavigation.match(/^#accueil$/)) {
 			accueilVue.afficher();
 		}
+
+		else if (intructionNavigation.match(/^#attente$/)){
+
+			attendreJoueur.afficher();
+			
+			jQuery(document).ready(function()
+			{
+	   			document.getElementById("toggle").style.display = "none";
+
+			});
+		}
 		else if (intructionNavigation.match(/^#jeu$/)) {
+
 			jeuVue.afficher();
-
-
 		}
 	}
 

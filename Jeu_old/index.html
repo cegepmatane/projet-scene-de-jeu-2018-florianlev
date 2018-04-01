@@ -41,17 +41,31 @@
 							 Il n'y a pas de rechargement de la page car c'est une technique de navigation
 							 HTML dans une même page. -->
 
-						<a id="bouton-jouer" href="#jeu">Jouer</a>
+						<a id="bouton-Attendrejoueur" href="#attente">Jouer</a>
 
-						<input type="button" id="bouton-jouer" value="login"/>
+						
 					</form>
 				</section>
 		</script>
 
-	<script type="text/plain" id="page-jeu">
-		<div id="texteAttendre">
-			<p>Veuillez attendre un joueur pour commencer la partie </p>
-		</div>
+		<script type="text/plain" id="page-AttendreJoueur">
+			<header>
+				<h1>QUIDDITCH BOULE</h1>
+				<h2>Le jeu le plus trippant du monde</h2>
+		</header>
+
+		<section id="section-attendreJoueur">
+			<p>Veuillez attendre qu'un joueur se connecte pour commencer la partie.</p>
+			<form id="form-attendre" method="post">
+				<div id="toggle">
+					<a id="bouton-jouer" href="#jeu">Jouer</a>
+				</div>
+			</form>
+		</section>
+		</script>
+
+
+<script type="text/plain" id="page-jeu">
 	<canvas id="dessin" width="1200" height="800"></canvas>
 	<div class="menu">
 			<a href="#accueil">Accueil</a>
@@ -76,6 +90,7 @@
 	
 
 	<script type="text/javascript" src="vue/AccueilVue.js"></script>
+	<script type="text/javascript" src="vue/AttendreJoueur.js"></script>
 	<script type="text/javascript" src="vue/JeuVue.js"></script>
 	<script type="text/javascript" src="vue/GagnerVue.js"></script>
 	<script type="text/javascript" src="vue/PerduVue.js"></script>

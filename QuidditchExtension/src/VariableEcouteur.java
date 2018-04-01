@@ -24,11 +24,7 @@ public class VariableEcouteur extends BaseServerEventHandler {
 	public double posBalleX;
 	public double posBalleY;
 	public QuidditchExtension jeuExtension;
-	
-	
 
-	
-	
 	public double widthCanvas;
 	public double heightCanvas;
 	
@@ -86,15 +82,15 @@ public class VariableEcouteur extends BaseServerEventHandler {
 				
 				if(variable.getName().compareTo("width") == 0 )
 				{
-					widthCanvasTemporaire = variable.getIntValue();
-					widthCanvasTemporaire = (double)widthCanvasTemporaire;
+					widthCanvasTemporaire = variable.getDoubleValue();
+				
 
 				}
 				
 				if(variable.getName().compareTo("height") == 0)
 				{
-					heightCanvasTemporaire = variable.getIntValue();
-					heightCanvasTemporaire = (double)heightCanvasTemporaire;
+					heightCanvasTemporaire = variable.getDoubleValue();
+			
 				} 
 		
 				
@@ -123,19 +119,16 @@ public class VariableEcouteur extends BaseServerEventHandler {
 					{
 						trace("Double");
 						trace("Y : " + variable.getValue());
-						positionBalleXTemporaire = variable.getDoubleValue();
+						positionBalleYTemporaire = variable.getDoubleValue();
 
 						
 					}
 					else if (variable.getValue() instanceof Integer) {
 						trace("Integer");
 						trace("Y : " + variable.getValue());
-						positionBalleXTemporaire = variable.getIntValue();
+							positionBalleYTemporaire = variable.getIntValue();
 
 					}
-					
-				
-					
 				}
 
 			}
@@ -172,12 +165,5 @@ public class VariableEcouteur extends BaseServerEventHandler {
 		}
 		
 	}
-	
-	
-	
-	
-
-	
-	
 
 }
