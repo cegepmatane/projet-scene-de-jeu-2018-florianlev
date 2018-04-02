@@ -129,10 +129,20 @@ this.envoyerPositionJ1 = function(positionJ1X, positionJ1Y)
 {
     var listePositionsJ1 = [];
 
-    listePositionsJ1.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', balleX));
-    listePositionsJ1.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYBalle', balleY));
+    listePositionsJ1.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXJ1', positionJ1X));
+    listePositionsJ1.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYJ1', positionJ1Y));
 
     estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositionsJ1));
+
+}
+this.envoyerPositionJ2 = function(positionJ2X, positionJ2Y)
+{
+    var listePositionsJ2 = [];
+
+    listePositionsJ2.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXJ2', positionJ2X));
+    listePositionsJ2.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYJ2', positionJ2Y));
+
+    estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositionsJ2));
 
 }
 
