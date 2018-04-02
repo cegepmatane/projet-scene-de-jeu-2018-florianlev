@@ -124,6 +124,19 @@ this.envoyerPositionBalle = function(positionBalleX, positionBalleY) {
     estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositions));
 
 }
+
+this.envoyerPositionJ1 = function(positionJ1X, positionJ1Y)
+{
+    var listePositionsJ1 = [];
+
+    listePositionsJ1.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', balleX));
+    listePositionsJ1.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYBalle', balleY));
+
+    estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositionsJ1));
+
+}
+
+
 function isFloat(n){
     return Number(n) === n && n % 1 !== 0;
 }
