@@ -113,7 +113,6 @@ this.envoyerPositionBalle = function(positionBalleX, positionBalleY) {
     testX = (positionBalleX).toFixed(10);
     testY = (positionBalleY).toFixed(10);
     //console.log(test2);
-    console.log(testX);
     
     balleX = parseFloat(testX);
     balleY = parseFloat(testY);
@@ -121,7 +120,6 @@ this.envoyerPositionBalle = function(positionBalleX, positionBalleY) {
     listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('action', "envoyerPositionBalle"));
     listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionXBalle', balleX));
     listePositions.push(new SFS2X.Entities.Variables.SFSRoomVariable('positionYBalle', balleY));
-    console.log("apres " +listePositions);
     
     estEnvoyeePosition = serveur.send(new SFS2X.Requests.System.SetRoomVariablesRequest(listePositions));
 

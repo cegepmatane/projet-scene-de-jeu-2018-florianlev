@@ -20,6 +20,9 @@
 	var dragon;
 	var balle;
 	var balleEnCollisionAvecDragon = false;
+	var balleEnCollisionAvecJ1 = false;
+	var balleEnCollisionAvecJ2 = false;
+
 	var balleEnCollisionAvecEnnemi = false;
 	var points = 0;
 	var vie = 3;
@@ -52,20 +55,19 @@
 
 		//Initialisation des vues
 		connection = new Connection(recevoirConfirmationJoueurPret,
-									recevoirVariableCommencerJouer, 
-									recevoirIdJoueur,
-									recevoirDiagonaleBalleX,
-									recevoirDiagonaleBalleY,
-									recevoirPositionBalleX,
-									recevoirPositionBalleY);
+			recevoirVariableCommencerJouer,
+			recevoirIdJoueur,
+			recevoirDiagonaleBalleX,
+			recevoirDiagonaleBalleY,
+			recevoirPositionBalleX,
+			recevoirPositionBalleY);
+
 		jeuVue = new JeuVue();
 		accueilVue = new AccueilVue();
 		gagnerVue = new GagnerVue();
 		perduVue = new PerduVue();
 
 		estJoueurMaitre = false;
-
-
 		pretACommencerPartie = false;
 		accueilVue.afficher();
 
@@ -74,41 +76,34 @@
 
 	}
 
-	function recevoirIdJoueur(id)
-	{
+	function recevoirIdJoueur(id) {
 
-		if (id == 0)
-		{
+		if (id == 0) {
 			estJoueurMaitre = true;
-			J1 = new Dragon(scene, EtatCouleur.orange);
+			//J1 = new Dragon(scene, EtatCouleur.orange);
 		}
-		else if (id == 1)
-		{
-			J2 = new Dragon(scene, EtatCouleur.orange);
+		else if (id == 1) {
+			//J2 = new Dragon(scene, EtatCouleur.orange);
 
 		}
 	}
-	function recevoirDiagonaleBalleX(dX)
-	{
+	function recevoirDiagonaleBalleX(dX) {
 		//console.log("recevoirDiagonaleBalleX()");
 		balle.setDiagonaleBalleX(dX);
 	}
 
-	function recevoirDiagonaleBalleY(dY)
-	{
+	function recevoirDiagonaleBalleY(dY) {
 		//console.log("dY" + dY);
 
 		balle.setDiagonaleBalleY(dY);
 	}
 
-	function recevoirPositionBalleX(x)
-	{
+	function recevoirPositionBalleX(x) {
 		//console.log("x : " +  x);
 		balle.setPositionBalleX(x);
 	}
 
-	function recevoirPositionBalleY(y)
-	{
+	function recevoirPositionBalleY(y) {
 		//console.log("y : " +  y);
 		balle.setPositionBalleY(y);
 	}
@@ -140,24 +135,21 @@
 		if (alerte) alert(message);
 	}
 
-	function deplacementDeLaBalle()
-	{
-		if(estJoueurMaitre)
-		{
+	function deplacementDeLaBalle() {
+		if (estJoueurMaitre) {
 			console.log("estJoueurMaitre == " + estJoueurMaitre);
-			
+
 			balle.deplacementBalle();
 
 
-			connection.envoyerPositionBalle(balle.getPositionBalleX(),balle.getPositionBalleY());
+			connection.envoyerPositionBalle(balle.getPositionBalleX(), balle.getPositionBalleY());
 		}
 		balle.afficher();
 
-		
+
 	}
 
-	function recevoirVariableCommencerJouer(varBool)
-	{
+	function recevoirVariableCommencerJouer(varBool) {
 		console.log("recevoirVariableCommencerJouer()");
 		commencerAJouer();
 		pretACommencerPartie = true;
@@ -173,51 +165,50 @@
 
 		scene = new createjs.Stage(dessin);
 		arrierePlan = new ArrierePlan(scene);
-		if(pretACommencerPartie){
+		if (pretACommencerPartie) {
 			document.getElementById("texteAttendre").style.display = "none";
 
-			dragon = new Dragon(scene, EtatCouleur.orange);
+			//dragon = new Dragon(scene, EtatCouleur.orange, "dragons.png");
+			J1 = new Dragon(scene, EtatCouleur.orange, "dragonsRed.png");
+
+			J2 = new Dragon(scene, EtatCouleur.orange, "dragons.png");
+			console.log("estCharge == " + J1.estCharge);
+
 			//ennemi = new Ennemi(scene);
 			balle = new Balle(scene, dessin);
-		
-			setInterval(deplacementDeLaBalle,25);
 
+			setInterval(deplacementDeLaBalle, 25);
+			test = "hello";
+			intervale = setInterval(
 
+				function () {
 
+					//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
 
-		intervale = setInterval(
-								
-			function () {
-
-				//console.log("Jeu->personnage.estCharge " + dragon.estCharge);
-				try {
-					if (dragon.estCharge) {
-					//if (dragon.estCharge ) {
+					if (J1.estCharge && J2.estCharge) {
+						//if (dragon.estCharge ) {
 						clearInterval(intervale);
 						arrierePlan.afficher();
-						dragon.afficher();
-						//J1.afficher();
+						//dragon.afficher();
+
+						J1.afficher();
+						J2.afficher();
 						//ennemi.afficher();
 						//balle.deplacementBalle();
 
 
 						document.onkeydown = gererToucheEnfoncee;
 						document.onkeyup = gererToucheLevee;
-						//dessin.addEventListener("mouseup", cliqueLevee, false);
+
 						scene.on("stagemouseup", clicRelache);
 
 						createjs.Ticker.framerate = 90;
 						createjs.Ticker.addEventListener("tick", rafraichirDeplacementHero);
 					}
-				}
-				catch (err) {
-					console.log("Veuillez attendre tous les joueurs!");
-
-				}
-			}, 500);
+				}, 500);
 		}
-		
 	}
+
 
 	function estConnecter() {
 
@@ -243,8 +234,13 @@
 		//rectangleEnnemi = ennemi.rectangleEnnemi;
 		//verif collision entre balle et joueur
 
-		if (dragon.rectangleDuDragon().intersects(balle.rectangleBalle())) {
-			balleEnCollisionAvecDragon = true;
+	
+		if (J1.rectangleDuDragon().intersects(balle.rectangleBalle())) {
+			balleEnCollisionAvecJ1 = true;
+
+		}
+		else if (J2.rectangleDuDragon().intersects(balle.rectangleBalle())) {
+			balleEnCollisionAvecJ2 = true;
 
 		}
 
@@ -255,7 +251,9 @@
 			//},300);
 		}*/
 		else {
-			balleEnCollisionAvecDragon = false;
+			balleEnCollisionAvecJ1 = false;
+			balleEnCollisionAvecJ2 = false;
+			//balleEnCollisionAvecDragon = false;
 			//balleEnCollisionAvecEnnemi = false;
 		}
 	}
@@ -264,18 +262,21 @@
 	function rafraichirDeplacementHero(evenement) {
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		arrierePlan.rafraichirAnimation(evenement);
-		dragon.appliquerVitesse(vitesseParSeconde);
+		//dragon.appliquerVitesse(vitesseParSeconde);
+		J1.appliquerVitesse(vitesseParSeconde);
+		J2.appliquerVitesse(vitesseParSeconde);
+
 
 
 		//envoyerPositionBalle();
-		rectangleDuDragon = dragon.rectangleDuDragon();
-
+		//rectangleDuDragon = dragon.rectangleDuDragon();
+		rectangleJ1 = J1.rectangleDuDragon();
+		rectangleJ2 = J2.rectangleDuDragon();
 
 		enCollision();
 		pointsJoueur();
 
 		gagnerPartieOuPerdu();
-
 		if (balle.etatCaptivite == balle.EtatEnCaptivite.enlibertee && balleEnCollisionAvecEnnemi) {
 
 			//balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteEnnemi;
@@ -304,60 +305,119 @@
 
 	function gererToucheEnfoncee(evenement) {
 
-		switch (evenement.keyCode) {
-			case TOUCHE_GAUCHE:
+		if (estJoueurMaitre) {
+			switch (evenement.keyCode) {
+				case TOUCHE_GAUCHE:
 
-				// ici charger  valeur event serveur 
-				dragon.deplacerVersLaGauche();
-				break;
-			case TOUCHE_DROITE:
+					J1.deplacerVersLaGauche();
 
-				dragon.deplacerVersLaDroite();
+					break;
+				case TOUCHE_DROITE:
 
-				break;
-			case TOUCHE_HAUT:
-				dragon.deplacerVersLeHaut();
+					J1.deplacerVersLaDroite();
 
-				break;
-			case TOUCHE_BAS:
-				dragon.deplacerVersLeBas();
+					break;
+				case TOUCHE_HAUT:
+					J1.deplacerVersLeHaut();
 
-				break;
+					break;
+				case TOUCHE_BAS:
+					J1.deplacerVersLeBas();
+
+					break;
+			}
 		}
+		else {
+			switch (evenement.keyCode) {
+				case TOUCHE_GAUCHE:
+
+					J2.deplacerVersLaGauche();
+					break;
+				case TOUCHE_DROITE:
+
+					J2.deplacerVersLaDroite();
+
+					break;
+				case TOUCHE_HAUT:
+					J2.deplacerVersLeHaut();
+
+					break;
+				case TOUCHE_BAS:
+					J2.deplacerVersLeBas();
+
+					break;
+			}
+		}
+
 	}
 
 
 
 	function gererToucheLevee(evenement) {
 
-		switch (evenement.keyCode) {
 
-			case TOUCHE_GAUCHE:
-				dragon.maintenirPosition();
-				break;
+		if (estJoueurMaitre) {
+			switch (evenement.keyCode) {
 
-			case TOUCHE_DROITE:
-				dragon.maintenirPosition();
-				break;
+				case TOUCHE_GAUCHE:
+					J1.maintenirPosition();
+					break;
 
-			case TOUCHE_HAUT:
-				dragon.maintenirPosition();
-				break;
+				case TOUCHE_DROITE:
+					J1.maintenirPosition();
+					break;
 
-			case TOUCHE_BAS:
-				dragon.maintenirPosition();
-				break;
+				case TOUCHE_HAUT:
+					J1.maintenirPosition();
+					break;
 
-			case TOUCHE_ESPACE:
-				if (balleEnCollisionAvecDragon) {
-					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteAllie;
-					balle.attraper(dragon.getCouleur());
-				}
+				case TOUCHE_BAS:
+					J1.maintenirPosition();
+					break;
+
+				case TOUCHE_ESPACE:
+
+					if (balleEnCollisionAvecJ1) {
+						balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteAllie;
+						balle.attraper(J1.getCouleur());
+					}
+					/*else {
+						console.log(balle.etatCaptivite);
+						balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteNeutre;
+					}*/
+					break;
+			}
+		}
+		else {
+			switch (evenement.keyCode) {
+
+				case TOUCHE_GAUCHE:
+					J2.maintenirPosition();
+					break;
+
+				case TOUCHE_DROITE:
+					J2.maintenirPosition();
+					break;
+
+				case TOUCHE_HAUT:
+					J2.maintenirPosition();
+					break;
+
+				case TOUCHE_BAS:
+					J2.maintenirPosition();
+					break;
+
+				case TOUCHE_ESPACE:
+					if (balleEnCollisionAvecJ2) {
+						balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteAllie;
+						balle.attraper(J2.getCouleur());
+					}
 				/*else {
 					console.log(balle.etatCaptivite);
 					balle.etatCaptivite = balle.EtatEnCaptivite.enCaptiviteNeutre;
-				}*/
-				break;
+				}
+				break;*/
+			}
 		}
 	}
 
@@ -367,10 +427,19 @@
 		positionY = evenement.stageY;
 
 
-		if (balleEnCollisionAvecDragon && balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie) {
+		if (estJoueurMaitre && balleEnCollisionAvecJ1 && balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie) {
 
 			balle.lancer(positionX, positionY);
 		}
+		else if (!estJoueurMaitre && balleEnCollisionAvecJ2 && balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie) {
+			balle.lancer(positionX, positionY);
+		}
+
+
+		/* 	if (balleEnCollisionAvecDragon && balle.etatCaptivite == balle.EtatEnCaptivite.enCaptiviteAllie) {
+	
+				balle.lancer(positionX, positionY);
+			} */
 
 	}
 

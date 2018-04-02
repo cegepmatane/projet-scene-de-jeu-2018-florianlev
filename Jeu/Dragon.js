@@ -1,4 +1,4 @@
-function Dragon(scene, couleur) {
+function Dragon(scene, couleur, image) {
 
 	var dragon = this;
 
@@ -43,10 +43,9 @@ function Dragon(scene, couleur) {
 
 		imageDragon = new Image();
 		
-		imageDragon.src = "dragons.png";
+		imageDragon.src = image;
 
 		imageDragon.onload = terminerChargement;
-
 
 	}
 
@@ -54,7 +53,7 @@ function Dragon(scene, couleur) {
 
 	function terminerChargement() {
 
-
+		console.log("terminerChargement == test");
 		spriteDragon = new createjs.SpriteSheet(
 			{
 				images: [imageDragon],
@@ -79,7 +78,6 @@ function Dragon(scene, couleur) {
 		animDroite.x = positionCourante.x;
 		animDroite.y = positionCourante.y;
 		etatCourant = Etat.enDirectionDroite;
-
 		rectrangleAnimationDragonMarcheBas = animBas.getTransformedBounds();
 		rectrangleAnimationDragonMarcheHaut = animHaut.getTransformedBounds();
 		rectrangleAnimationDragonMarcheGauche = animGauche.getTransformedBounds();
