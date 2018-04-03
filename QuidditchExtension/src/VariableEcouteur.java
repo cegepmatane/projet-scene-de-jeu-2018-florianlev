@@ -100,13 +100,11 @@ public class VariableEcouteur extends BaseServerEventHandler {
 					if(variable.getValue() instanceof Double)
 					{
 						trace("Double");
-						trace("X : " + variable.getValue());
 						positionBalleXTemporaire = variable.getDoubleValue();
 						
 					}
 					else if (variable.getValue() instanceof Integer) {
 						trace("Integer");
-						trace("X : " + variable.getValue());
 						positionBalleXTemporaire = variable.getIntValue();
 
 					}
@@ -118,14 +116,12 @@ public class VariableEcouteur extends BaseServerEventHandler {
 					if(variable.getValue() instanceof Double)
 					{
 						trace("Double");
-						trace("Y : " + variable.getValue());
 						positionBalleYTemporaire = variable.getDoubleValue();
 
 						
 					}
 					else if (variable.getValue() instanceof Integer) {
 						trace("Integer");
-						trace("Y : " + variable.getValue());
 							positionBalleYTemporaire = variable.getIntValue();
 
 					}
@@ -137,7 +133,6 @@ public class VariableEcouteur extends BaseServerEventHandler {
 		
 		if(action.compareTo("envoyerPositionBalle") == 0)
 		{
-			trace("if envoyerPositionBalle");
 			this.posBalleX = positionBalleXTemporaire;
 			this.posBalleY = positionBalleYTemporaire;
 			jeuExtension.balle.deplacementBalle(this.posBalleX, this.posBalleY);

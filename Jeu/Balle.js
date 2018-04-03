@@ -117,16 +117,7 @@ function Balle(stage, canvas) {
 		//console.log(etatCourant);
 		if (etatCourant == EtatBalle.estLancer) {	
 
-			//if (dessin.x + dx > canvas.width || dessin.x + dx < 0) // Dépassement à droite ou à gauche
-				//dx = - dx;
-			//if (dessin.y + dy > canvas.height || dessin.y + dy < 0) // Dépassement en bas ou en haut
-				//dy = - dy;
-			//console.log("dx : " + dx);
-			//console.log("dx :" + dx);
 
-			//console.log("dy : " + dy);
-			console.log("dy " + dy);
-			//console.log("y " + dessin.y );
 			dessin.x = dessin.x + dx; // On déplace la balle
 			dessin.y = dessin.y + dy;
 			positionBalleX = dessin.x;

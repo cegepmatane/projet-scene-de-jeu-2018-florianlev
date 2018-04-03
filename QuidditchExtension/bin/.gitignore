@@ -1,3 +1,6 @@
-/QuidditchExtension$TaskRunner.class
-/QuidditchExtension$TaskRunnerextends.class
-/Balle$TaskRunner.class
+/Balle.class
+/DeplacementBalle.class
+/Inviteur.class
+/QuidditchExtension.class
+/RecevoirVariablesDiagonales.class
+/VariableEcouteur.class

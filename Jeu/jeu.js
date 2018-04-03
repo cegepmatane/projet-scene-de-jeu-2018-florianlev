@@ -137,11 +137,8 @@
 
 	function deplacementDeLaBalle() {
 		if (estJoueurMaitre) {
-			console.log("estJoueurMaitre == " + estJoueurMaitre);
 
 			balle.deplacementBalle();
-
-
 			connection.envoyerPositionBalle(balle.getPositionBalleX(), balle.getPositionBalleY());
 		}
 		balle.afficher();
@@ -178,7 +175,9 @@
 			balle = new Balle(scene, dessin);
 
 			setInterval(deplacementDeLaBalle, 25);
+
 			test = "hello";
+
 			intervale = setInterval(
 
 				function () {
@@ -193,6 +192,7 @@
 
 						J1.afficher();
 						J2.afficher();
+						
 						//ennemi.afficher();
 						//balle.deplacementBalle();
 
@@ -263,8 +263,16 @@
 		var vitesseParSeconde = evenement.delta / 1000 * NOMBRE_DE_PAS;
 		arrierePlan.rafraichirAnimation(evenement);
 		//dragon.appliquerVitesse(vitesseParSeconde);
-		J1.appliquerVitesse(vitesseParSeconde);
-		J2.appliquerVitesse(vitesseParSeconde);
+
+		if(estJoueurMaitre)
+		{
+			J1.appliquerVitesse(vitesseParSeconde);
+
+		}
+		else{
+			J2.appliquerVitesse(vitesseParSeconde);
+
+		}
 
 
 
@@ -272,6 +280,10 @@
 		//rectangleDuDragon = dragon.rectangleDuDragon();
 		rectangleJ1 = J1.rectangleDuDragon();
 		rectangleJ2 = J2.rectangleDuDragon();
+
+
+		connection.envoyerPositionJ1(rectangleJ1.x, rectangleJ1.y);
+		connection.envoyerPositionJ2(rectangleJ2.x, rectangleJ2.y);
 
 		enCollision();
 		pointsJoueur();

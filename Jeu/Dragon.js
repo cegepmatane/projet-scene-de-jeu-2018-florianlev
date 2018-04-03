@@ -21,7 +21,7 @@ function Dragon(scene, couleur, image) {
 	var animationCourante;
 
 
-	var positionCourante = { x: 0, y: 0 };
+	var positionCourante = { x: 300, y: 600 };
 
 	var etatCourant;
 
@@ -40,7 +40,7 @@ function Dragon(scene, couleur, image) {
 
 
 	function initialiser() {
-
+	
 		imageDragon = new Image();
 		
 		imageDragon.src = image;
@@ -68,13 +68,14 @@ function Dragon(scene, couleur, image) {
 					}
 
 			});
+		
 
 		animHaut = new createjs.Sprite(spriteDragon, "marcheHaut");
 		animDroite = new createjs.Sprite(spriteDragon, "marcheDroite");
 		animGauche = new createjs.Sprite(spriteDragon, "marcheGauche");
 		animBas = new createjs.Sprite(spriteDragon, "marcheBas");
 		dragon.estCharge = true;
-		
+
 		animDroite.x = positionCourante.x;
 		animDroite.y = positionCourante.y;
 		etatCourant = Etat.enDirectionDroite;
@@ -89,6 +90,7 @@ function Dragon(scene, couleur, image) {
 
 	function gererAnimation(animation)
 	{
+		//animationCourante.x = 500;
 		xCourant = animationCourante.x;
 		yCourant = animationCourante.y;
 
@@ -101,7 +103,6 @@ function Dragon(scene, couleur, image) {
 
 	this.afficher = function () {
 
-		
 		animationCourante = animBas;
 		scene.addChild(animationCourante);
 
@@ -211,7 +212,7 @@ function Dragon(scene, couleur, image) {
 		return etatActuelX;
 	}
 
-	
+
 
 
 	this.attraperBalle = function () 
