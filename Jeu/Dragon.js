@@ -13,7 +13,8 @@ function Dragon(scene, couleur, image) {
 	var etatActuelX;
 	var etatActuelY;
 	this.animBas;
-	
+	var xModifie;
+	var yModifie;
 
 
 	var xCourant;
@@ -21,7 +22,7 @@ function Dragon(scene, couleur, image) {
 	var animationCourante;
 
 
-	var positionCourante = { x: 300, y: 600 };
+	var positionCourante = { x: 0, y: 0 };
 
 	var etatCourant;
 
@@ -75,15 +76,16 @@ function Dragon(scene, couleur, image) {
 		animGauche = new createjs.Sprite(spriteDragon, "marcheGauche");
 		animBas = new createjs.Sprite(spriteDragon, "marcheBas");
 		dragon.estCharge = true;
-
+/* 			
 		animDroite.x = positionCourante.x;
-		animDroite.y = positionCourante.y;
+		animDroite.y = positionCourante.y; */
 		etatCourant = Etat.enDirectionDroite;
 		rectrangleAnimationDragonMarcheBas = animBas.getTransformedBounds();
 		rectrangleAnimationDragonMarcheHaut = animHaut.getTransformedBounds();
 		rectrangleAnimationDragonMarcheGauche = animGauche.getTransformedBounds();
 		rectrangleAnimationDragonMarcheDroite = animDroite.getTransformedBounds();
-
+		animationCourante = animBas;
+		gererAnimation(animBas)
 
 
 	}
@@ -91,8 +93,8 @@ function Dragon(scene, couleur, image) {
 	function gererAnimation(animation)
 	{
 		//animationCourante.x = 500;
-		xCourant = animationCourante.x;
-		yCourant = animationCourante.y;
+
+		
 
 		scene.removeChild(animationCourante);
 		animationCourante = animation;
@@ -103,8 +105,21 @@ function Dragon(scene, couleur, image) {
 
 	this.afficher = function () {
 
-		animationCourante = animBas;
+		//animationCourante = animBas;
+		if(xModifie != null)
+		{
+			alert("gererAnimation");
+			xCourant = xModifie;
+			yCourant = yModifie;
+			xModifie = null;
+			yModifie = null;
+			animationCourante.x = xCourant;
+			animationCourante.y = yCourant;
+		}
+	
 		scene.addChild(animationCourante);
+		console.log("x" + xCourant);
+	
 
 	}
 	
@@ -210,6 +225,12 @@ function Dragon(scene, couleur, image) {
 		}
 
 		return etatActuelX;
+	}
+
+	this.modifierPosition = function(x,y)
+	{
+		xModifie = x;
+		yModifie = y;
 	}
 
 

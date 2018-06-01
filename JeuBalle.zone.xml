@@ -71,7 +71,7 @@
         <variable>
           <name>positionXJ1</name>
           <value>0</value>
-          <type>DOUBLE</type>
+          <type>INT</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -80,7 +80,7 @@
         <variable>
           <name>positionYJ1</name>
           <value>0</value>
-          <type>DOUBLE</type>
+          <type>INT</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -89,7 +89,7 @@
         <variable>
           <name>positionXBalle</name>
           <value>0</value>
-          <type>INT</type>
+          <type>DOUBLE</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -98,7 +98,7 @@
         <variable>
           <name>positionYBalle</name>
           <value>0</value>
-          <type>INT</type>
+          <type>DOUBLE</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -125,7 +125,7 @@
         <variable>
           <name>positionXJ2</name>
           <value>0</value>
-          <type>DOUBLE</type>
+          <type>INT</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -134,43 +134,7 @@
         <variable>
           <name>positionYJ2</name>
           <value>0</value>
-          <type>DOUBLE</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>positionXJ3</name>
-          <value>0</value>
-          <type>DOUBLE</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>positionYJ3</name>
-          <value>0</value>
-          <type>DOUBLE</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>positionXJ4</name>
-          <value>0</value>
-          <type>DOUBLE</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>positionYJ4</name>
-          <value>0</value>
-          <type>DOUBLE</type>
+          <type>INT</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -195,43 +159,7 @@
           <isHidden>false</isHidden>
         </variable>
         <variable>
-          <name>pointsJ3</name>
-          <value>0</value>
-          <type>INT</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>pointsJ4</name>
-          <value>0</value>
-          <type>INT</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
           <name>couleurJ2</name>
-          <value>noir</value>
-          <type>STRING</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>couleurJ3</name>
-          <value>noir</value>
-          <type>STRING</type>
-          <isPrivate>false</isPrivate>
-          <isPersistent>false</isPersistent>
-          <isGlobal>false</isGlobal>
-          <isHidden>false</isHidden>
-        </variable>
-        <variable>
-          <name>couleurJ4</name>
           <value>noir</value>
           <type>STRING</type>
           <isPrivate>false</isPrivate>
@@ -260,7 +188,7 @@
         <variable>
           <name>diagonaleX</name>
           <value>0</value>
-          <type>INT</type>
+          <type>DOUBLE</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -269,7 +197,7 @@
         <variable>
           <name>diagonaleY</name>
           <value>0</value>
-          <type>INT</type>
+          <type>DOUBLE</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -305,7 +233,7 @@
         <variable>
           <name>height</name>
           <value>0</value>
-          <type>INT</type>
+          <type>DOUBLE</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>
@@ -314,7 +242,7 @@
         <variable>
           <name>width</name>
           <value>0</value>
-          <type>INT</type>
+          <type>DOUBLE</type>
           <isPrivate>false</isPrivate>
           <isPersistent>false</isPersistent>
           <isGlobal>false</isGlobal>

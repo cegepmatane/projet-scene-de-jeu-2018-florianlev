@@ -170,7 +170,7 @@
 
 			J2 = new Dragon(scene, EtatCouleur.orange, "dragons.png");
 			console.log("estCharge == " + J1.estCharge);
-
+			J1.modifierPosition(400,300);
 			//ennemi = new Ennemi(scene);
 			balle = new Balle(scene, dessin);
 
@@ -222,7 +222,6 @@
 		}
 		else if (intructionNavigation.match(/^#jeu$/)) {
 			jeuVue.afficher();
-
 
 		}
 	}
@@ -280,7 +279,7 @@
 		//rectangleDuDragon = dragon.rectangleDuDragon();
 		rectangleJ1 = J1.rectangleDuDragon();
 		rectangleJ2 = J2.rectangleDuDragon();
-
+		console.log(rectangleJ1.x);
 
 		connection.envoyerPositionJ1(rectangleJ1.x, rectangleJ1.y);
 		connection.envoyerPositionJ2(rectangleJ2.x, rectangleJ2.y);
